@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserve Any 月次運用レポート - 2025年12月</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #F3F4F6;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        /* Alert pulse animation */
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .alert-pulse {
+            animation: pulse-red 2s infinite;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-gradient-to-r from-blue-600 to-cyan-500 text-white p-6 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold mb-2">Reserve Any 月次運用レポート</h1>
+                <p class="text-blue-100 text-lg">2025年12月度 | 運用ハイライト & アクションプラン</p>
+            </div>
+            <div class="mt-4 md:mt-0 bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
+                <span class="font-bold">ステータス:</span> 定着フェーズ完了
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-8 space-y-8">
+
+        <!-- Executive Summary -->
+        <section class="bg-white rounded-xl card-shadow p-6 md:p-8 border-l-8 border-blue-600">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">🚀 エグゼクティブサマリー</h2>
+            <p class="text-gray-600 leading-relaxed text-lg mb-4">
+                12月は「Reserve Any」にとって飛躍の月となりました。運用初月にして<span class="font-bold text-blue-600">全社員の約67%</span>が利用を開始し、社内インフラとしての定着に成功しました。
+            </p>
+            <p class="text-gray-600 leading-relaxed text-lg">
+                課題は、稼働率の平均値（30%台）と乖離した<span class="font-bold text-red-500">「体感的な予約の取りづらさ」</span>です。分析の結果、平均稼働率は余裕があるものの、特定の「人気時間（14時）」や「人気会議室」に需要が極端に偏っている可能性が示唆されました。この「ムラ」を解消することが次月の焦点です。
+            </p>
+        </section>
+
+        <!-- KPI Grid -->
+        <section>
+            <h3 class="text-xl font-bold text-gray-700 mb-4 border-b-2 border-gray-200 pb-2">主要KPIハイライト</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl card-shadow p-6 border-t-4 border-blue-500">
+                    <div class="text-sm text-gray-500 font-bold uppercase mb-1">RA普及率</div>
+                    <div class="flex items-end justify-between">
+                        <span class="text-4xl font-bold text-gray-800">66.8%</span>
+                        <span class="text-sm font-bold text-green-600 bg-green-100 px-2 py-1 rounded">Sランク</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2">社内定着の指標 (初月)</p>
+                </div>
+                <div class="bg-white rounded-xl card-shadow p-6 border-t-4 border-cyan-500">
+                    <div class="text-sm text-gray-500 font-bold uppercase mb-1">会議室稼働率</div>
+                    <div class="flex items-end justify-between">
+                        <span class="text-4xl font-bold text-gray-800">33.9%</span>
+                        <span class="text-sm font-bold text-gray-600 bg-gray-100 px-2 py-1 rounded">-</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2">平均値。ピーク時とは乖離あり。</p>
+                </div>
+                <div class="bg-white rounded-xl card-shadow p-6 border-t-4 border-amber-500">
+                    <div class="text-sm text-gray-500 font-bold uppercase mb-1">おまかせ予約率</div>
+                    <div class="flex items-end justify-between">
+                        <span class="text-4xl font-bold text-gray-800">10.7%</span>
+                        <span class="text-sm font-bold text-amber-600 bg-amber-100 px-2 py-1 rounded">Cランク</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2">アルゴリズム活用度 (目標30%)</p>
+                </div>
+                <div class="bg-white rounded-xl card-shadow p-6 border-t-4 border-red-500 alert-pulse">
+                    <div class="text-sm text-gray-500 font-bold uppercase mb-1">予約失敗率</div>
+                    <div class="flex items-end justify-between">
+                        <span class="text-4xl font-bold text-gray-800">39.4%</span>
+                        <span class="text-sm font-bold text-red-600 bg-red-100 px-2 py-1 rounded">Dランク</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2">ピーク時の需給バランス</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deep Dive Analysis Section -->
+        <section class="space-y-8">
+            <h3 class="text-xl font-bold text-gray-700 mb-4 border-b-2 border-gray-200 pb-2">【深掘り分析】「平均36%なのに取れない」謎を解く</h3>
+            
+            <!-- Bottleneck Analysis Row -->
+             <div class="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-xl mb-6">
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="flex-1">
+                        <h4 class="text-lg font-bold text-blue-800 mb-2 flex items-center">
+                            <span class="text-2xl mr-2">🤔</span>
+                            仮説：「特定の人気会議室」への一極集中
+                        </h4>
+                        <p class="text-sm text-gray-700 leading-relaxed mb-4">
+                            稼働率36.6%はあくまで平均値です。「まだ空きがあるはず」に見えますが、高い失敗率は<strong>「特定の条件（時間・場所）の奪い合い」</strong>を示唆しています。
+                        </p>
+                        <ul class="list-disc list-inside text-sm text-gray-700 mb-4 pl-2">
+                            <li><strong>時間的偏り:</strong> 14:00などのピーク時は稼働率100%近い可能性があります。</li>
+                            <li><strong>空間的偏り:</strong> 同じ「5人部屋」でも、設備が良い「Room A」だけが人気で、「Room B」はガラガラである可能性があります。</li>
+                        </ul>
+                        
+                        <div class="text-xs bg-white p-3 rounded border border-red-200 text-gray-600 shadow-sm">
+                            <strong class="text-red-500">⚠ 追加分析に必要なデータ:</strong><br>
+                            1. <strong>部屋ごとの個別稼働率</strong>（特定部屋の独り勝ちを確認）<br>
+                            2. <strong>時間帯別の詳細稼働率</strong>（ピーク時の飽和度を確認）
+                        </div>
+                    </div>
+                    <div class="flex-1 h-64 md:h-auto chart-container">
+                         <canvas id="bottleneckChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Standard Analysis Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl card-shadow p-6">
+                    <h4 class="text-lg font-bold text-gray-800 mb-2">① 時間帯別ボトルネック（14時の壁）</h4>
+                    <p class="text-sm text-gray-600 mb-6">
+                        平均稼働率を押し下げているのは朝夕の空き時間です。14:00台の失敗率（20.3%）は、この時間帯の「実質稼働率」が限界に達していることを示しています。
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="hourlyFailureChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl card-shadow p-6">
+                    <h4 class="text-lg font-bold text-gray-800 mb-2">② コスト意識の欠如（ポイント余り）</h4>
+                    <p class="text-sm text-gray-600 mb-6">
+                        ポイントが余っているため、ユーザーは「空いている部屋」を探すのではなく、「一番良い部屋（人気の部屋）」を指名買いします。これが「空間的偏り」を加速させています。
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="pointConsumptionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                 <div class="bg-white rounded-xl card-shadow p-6">
+                    <h4 class="text-lg font-bold text-gray-800 mb-2">③ 予約手法の内訳（手動偏重）</h4>
+                    <p class="text-sm text-gray-600 mb-6">
+                        9割が手動予約です。おまかせ予約（自動）なら、人気の「Room A」が埋まっていても、空いている「Room B」へ誘導できますが、利用が進んでいません。
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="omakaseRatioChart"></canvas>
+                    </div>
+                </div>
+                 <!-- Missing Data Card -->
+                <div class="bg-gray-50 rounded-xl card-shadow p-6 border-2 border-dashed border-gray-300 flex flex-col justify-center items-center text-center">
+                    <div class="text-4xl mb-2">🔍</div>
+                    <h4 class="text-lg font-bold text-gray-600 mb-2">Next Step: 偏りの可視化</h4>
+                    <p class="text-sm text-gray-500 mb-4">
+                        「なぜその部屋が良いのか？」を解明するため、<br>
+                        以下のデータを取得します。
+                    </p>
+                    <div class="text-left bg-white p-3 rounded w-full text-xs text-gray-600 border border-gray-200">
+                        ✅ <strong>部屋別稼働率ランキング</strong><br>
+                        ✅ <strong>設備検索ログ</strong>（モニター有無など）<br>
+                        ✅ <strong>拒否された部屋の特定</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Plan Section -->
+        <section class="bg-gradient-to-br from-gray-800 to-gray-900 text-white rounded-xl card-shadow p-8 mb-12">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold">🛠 改善提案・ネクストアクション</h2>
+                <div class="mt-4 md:mt-0 bg-blue-600 text-white text-sm font-bold px-4 py-2 rounded-full">
+                    2026年1月 実施予定
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gray-700/50 p-6 rounded-lg border border-gray-600 hover:bg-gray-700 transition-colors">
+                    <div class="text-3xl mb-4">💰</div>
+                    <h3 class="text-lg font-bold mb-2 text-blue-300">「人気部屋」の価格引き上げ</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        一律値上げではなく、まずは「5人以上用」の消費ポイントを重点的に引き上げ（2.0倍）、人気の集中を分散させます。
+                    </p>
+                </div>
+
+                <div class="bg-gray-700/50 p-6 rounded-lg border border-gray-600 hover:bg-gray-700 transition-colors">
+                    <div class="text-3xl mb-4">⚖️</div>
+                    <h3 class="text-lg font-bold mb-2 text-amber-300">ピークタイム価格導入</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        失敗率が突出している<span class="font-bold text-white">14:00〜15:00</span>の時間帯に対し、割増設定を導入し、時間の分散を促します。
+                    </p>
+                </div>
+
+                <div class="bg-gray-700/50 p-6 rounded-lg border border-gray-600 hover:bg-gray-700 transition-colors">
+                    <div class="text-3xl mb-4">📊</div>
+                    <h3 class="text-lg font-bold mb-2 text-cyan-300">部屋別データの取得</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        「どの部屋が」「なぜ」選ばれているのかを特定するため、部屋ごとの詳細ログ分析を開始します。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-200 text-center p-6 text-gray-500 text-sm">
+        <p>&copy; 2026 Reserve Any Customer Success Team. All Rights Reserved.</p>
+        <p class="mt-1">Generated based on December 2025 Operation Data.</p>
+    </footer>
+
+    <script>
+        function wrapLabel(label, maxChars = 16) {
+            if (label.length <= maxChars) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + 1 + words[i].length <= maxChars) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        Chart.defaults.font.family = "'Noto Sans JP', sans-serif";
+        Chart.defaults.color = '#4B5563';
+        
+        const commonPlugins = {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        const item = tooltipItems[0];
+                        let label = item.chart.data.labels[item.dataIndex];
+                        if (Array.isArray(label)) {
+                            return label.join(' ');
+                        } else {
+                            return label;
+                        }
+                    }
+                },
+                backgroundColor: 'rgba(17, 24, 39, 0.9)',
+                padding: 12,
+                cornerRadius: 8,
+            },
+            legend: {
+                position: 'bottom',
+                labels: {
+                    usePointStyle: true,
+                    padding: 20
+                }
+            }
+        };
+
+        // ---------------------------------------------------------
+        // Bottleneck Analysis Chart (Combined Capacity Usage)
+        // ---------------------------------------------------------
+        const ctxBottleneck = document.getElementById('bottleneckChart').getContext('2d');
+        new Chart(ctxBottleneck, {
+            type: 'bar',
+            data: {
+                labels: ['5人以上用 (人気集中)', '3-4人用 (空きあり)', '2人用 (標準)'].map(l => wrapLabel(l)),
+                datasets: [{
+                    label: '平均稼働率 (%)',
+                    data: [36.6, 21.8, 29.7],
+                    backgroundColor: [
+                        '#EF4444', // Red for High Demand
+                        '#93C5FD', // Light Blue
+                        '#3B82F6'  // Blue
+                    ],
+                    borderRadius: 6,
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    ...commonPlugins,
+                    title: {
+                        display: true,
+                        text: '部屋タイプ別稼働率 (平均の罠に注意)',
+                        padding: { bottom: 20 }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 50,
+                        grid: { borderDash: [2, 4] }
+                    },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        // ---------------------------------------------------------
+        // Hourly Failure Chart
+        // ---------------------------------------------------------
+        const ctxFailure = document.getElementById('hourlyFailureChart').getContext('2d');
+        new Chart(ctxFailure, {
+            type: 'line',
+            data: {
+                labels: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'],
+                datasets: [{
+                    label: '予約失敗率 (%)',
+                    data: [2.0, 12.6, 5.5, 4.0, 8.2, 5.0, 20.3, 8.5, 4.5, 3.0, 1.5],
+                    borderColor: '#F59E0B',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#F59E0B',
+                    pointRadius: 5,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: commonPlugins,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 25,
+                        grid: { borderDash: [2, 4] },
+                        title: { display: true, text: '失敗率 (%)' }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // ---------------------------------------------------------
+        // Point Consumption Chart
+        // ---------------------------------------------------------
+        const ctxPoints = document.getElementById('pointConsumptionChart').getContext('2d');
+        new Chart(ctxPoints, {
+            type: 'bar',
+            data: {
+                labels: ['個人ポイント消費率', '部署ポイント消費率'].map(l => wrapLabel(l)),
+                datasets: [{
+                    label: '消費率 (%)',
+                    data: [3.9, 10.4],
+                    backgroundColor: '#06B6D4',
+                    borderRadius: 6,
+                    barThickness: 40
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: commonPlugins,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { borderDash: [2, 4] }
+                    },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        // ---------------------------------------------------------
+        // Omakase Ratio Chart
+        // ---------------------------------------------------------
+        const ctxOmakase = document.getElementById('omakaseRatioChart').getContext('2d');
+        new Chart(ctxOmakase, {
+            type: 'doughnut',
+            data: {
+                labels: ['こだわり予約 (手動)', 'おまかせ予約 (自動)'].map(l => wrapLabel(l)),
+                datasets: [{
+                    data: [89.3, 10.7],
+                    backgroundColor: [
+                        '#E5E7EB',
+                        '#2563EB'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    ...commonPlugins,
+                    title: {
+                        display: true,
+                        text: '予約方法の内訳',
+                        position: 'top',
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
