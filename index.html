@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserve Any 月次改善レポート (2025年12月 - Report 5 修正版)</title>
+    <title>Reserve Any 月次改善レポートフォーマット（本社データ版）</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Noto Sans JP', sans-serif;
-            background-color: #F1F5F9;
+            background-color: #F8FAFC; /* Slate 50 */
         }
         .chart-container {
             position: relative;
@@ -18,254 +18,324 @@
             height: 300px;
         }
         .card-shadow {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            border: 1px solid #E2E8F0;
         }
         .section-title {
             display: flex;
             align-items: center;
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             font-weight: 700;
-            color: #334155;
+            color: #1E293B;
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid #E2E8F0;
+            border-bottom: 1px solid #E2E8F0;
         }
         .section-icon {
             margin-right: 0.5rem;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
+            color: #64748B;
         }
         /* Status Badges */
-        .badge-good { background-color: #DCFCE7; color: #166534; padding: 2px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: bold; }
-        .badge-warn { background-color: #FEF9C3; color: #854D0E; padding: 2px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: bold; }
-        .badge-alert { background-color: #FEE2E2; color: #991B1B; padding: 2px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: bold; }
+        .badge-good { background-color: #F0FDF4; color: #15803D; border: 1px solid #BBF7D0; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 500; }
+        .badge-warn { background-color: #FEFCE8; color: #A16207; border: 1px solid #FEF08A; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 500; }
+        .badge-alert { background-color: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 500; }
     </style>
 </head>
-<body class="text-slate-800">
+<body class="text-slate-700">
 
     <!-- Header -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div>
-                <h1 class="text-2xl font-bold text-slate-800">Reserve Any 月次運用レポート</h1>
-                <p class="text-sm text-slate-500">対象期間: 2025年12月度 (Report 5) | 更新日: 2026/01/15</p>
+                <h1 class="text-xl font-bold text-slate-800">Reserve Any 月次運用レポート</h1>
+                <p class="text-xs text-slate-500 mt-1">対象期間: 2025年12月度（本社） | 作成日: 2026/01/15</p>
             </div>
             <div class="flex gap-2">
-                <span class="px-3 py-1 bg-indigo-600 text-white text-sm font-bold rounded shadow">定例報告用</span>
+                <span class="px-3 py-1 bg-slate-100 text-slate-600 border border-slate-200 text-xs font-medium rounded">定例報告用</span>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto p-4 md:p-8 space-y-8">
+    <main class="max-w-7xl mx-auto p-6 space-y-8">
 
         <!-- 1. Executive Summary -->
-        <section class="bg-white rounded-xl card-shadow p-6">
+        <section class="bg-white rounded-lg card-shadow p-6">
             <h2 class="section-title"><span class="section-icon">📝</span>エグゼクティブサマリー</h2>
-            <div class="prose max-w-none text-slate-600">
-                <p class="mb-2">
-                    <strong>【総評】「自動化離れ」と「昼時の異常混雑」が深刻化</strong>
+            <div class="prose max-w-none text-slate-600 text-sm leading-relaxed">
+                <p class="mb-3">
+                    <strong class="text-slate-800">【総評】定着は成功するも、ピーク時の「予約枯渇」が深刻化。</strong>
                 </p>
-                <p class="text-sm">
-                    RA普及率は67.0%と高い水準ですが、<strong>おまかせ利用率（件数ベース）は8.5%</strong>に留まっています。
-                    一方で、おまかせ普及率（人数ベース）は36.4%あり、「一度使ったが定着せず手動予約に戻った層」が多いことが推測されます。
-                    この結果、手動予約による場所の取り合いが激化し、特に<strong>12:00台の予約失敗率が82.9%</strong>という異常値を記録しました。
+                <p>
+                    RA普及率は66.8%と順調に推移していますが、<strong class="text-rose-600">予約失敗率が39.4%</strong>と極めて高い水準にあります。
+                    データ分析の結果、特に「5人以上用（大会議室）」へのニーズ集中がボトルネックであることが判明しました。ポイント設定による需要分散が急務です。
                 </p>
             </div>
         </section>
 
         <!-- 2. KPI Highlights -->
         <section>
-            <h2 class="section-title"><span class="section-icon">📊</span>主要KPIハイライト</h2>
+            <h2 class="section-title border-none mb-4"><span class="section-icon">📊</span>主要KPIハイライト</h2>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <!-- KPI Card -->
-                <div class="bg-white p-5 rounded-lg card-shadow border-l-4 border-indigo-500">
+                <div class="bg-white p-5 rounded-lg card-shadow border-t-4 border-slate-500">
                     <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-bold text-slate-400 uppercase">RA普及率 (人)</span>
+                        <span class="text-xs font-medium text-slate-500 uppercase tracking-wide">RA普及率</span>
                         <span class="badge-good">S判定</span>
                     </div>
-                    <div class="text-3xl font-bold text-slate-800 mb-1">67.0%</div>
-                    <div class="text-xs text-slate-500">利用者は安定して定着</div>
+                    <div class="text-2xl font-bold text-slate-800 mb-1">66.8%</div>
+                    <div class="text-xs text-slate-400">社内インフラとして定着</div>
                 </div>
                 <!-- KPI Card -->
-                <div class="bg-white p-5 rounded-lg card-shadow border-l-4 border-blue-500">
+                <div class="bg-white p-5 rounded-lg card-shadow border-t-4 border-slate-400">
                     <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-bold text-slate-400 uppercase">会議室稼働率</span>
-                        <span class="badge-warn">C判定</span>
+                        <span class="text-xs font-medium text-slate-500 uppercase tracking-wide">会議室稼働率</span>
+                        <span class="badge-good">A判定</span>
                     </div>
-                    <div class="text-3xl font-bold text-slate-800 mb-1">29.7%</div>
-                    <div class="text-xs text-slate-500">5人以上用(32.3%)に偏り</div>
+                    <div class="text-2xl font-bold text-slate-800 mb-1">33.9%</div>
+                    <div class="text-xs text-slate-400">活発に利用されている</div>
                 </div>
                 <!-- KPI Card -->
-                <div class="bg-white p-5 rounded-lg card-shadow border-l-4 border-rose-600">
+                <div class="bg-white p-5 rounded-lg card-shadow border-t-4 border-slate-600">
                     <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-bold text-slate-400 uppercase">おまかせ利用率 (件)</span>
+                        <span class="text-xs font-medium text-slate-500 uppercase tracking-wide">おまかせ利用率</span>
+                        <span class="badge-alert">C判定</span>
+                    </div>
+                    <div class="text-2xl font-bold text-slate-800 mb-1">10.7%</div>
+                    <div class="text-xs text-slate-400">低水準（手動予約中心）</div>
+                </div>
+                <!-- KPI Card -->
+                <div class="bg-white p-5 rounded-lg card-shadow border-t-4 border-slate-400">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-xs font-medium text-slate-500 uppercase tracking-wide">予約失敗率</span>
                         <span class="badge-alert">D判定</span>
                     </div>
-                    <div class="text-3xl font-bold text-slate-800 mb-1">8.5%</div>
-                    <div class="text-xs text-slate-500">普及率(36.4%)と乖離大</div>
-                </div>
-                <!-- KPI Card -->
-                <div class="bg-white p-5 rounded-lg card-shadow border-l-4 border-rose-500">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-bold text-slate-400 uppercase">予約失敗率</span>
-                        <span class="badge-alert">D判定</span>
-                    </div>
-                    <div class="text-3xl font-bold text-slate-800 mb-1">39.4%</div>
-                    <div class="text-xs text-slate-500">昼時に極度集中</div>
+                    <div class="text-2xl font-bold text-slate-800 mb-1">39.4%</div>
+                    <div class="text-xs text-slate-400">ピーク時に深刻な不足</div>
                 </div>
             </div>
         </section>
 
         <!-- 3. Current Status & Bottleneck Analysis -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Chart: Room Utilization -->
-            <div class="bg-white rounded-xl card-shadow p-6">
-                <h3 class="text-md font-bold text-slate-700 mb-4 flex items-center">
+            <div class="bg-white rounded-lg card-shadow p-6">
+                <h3 class="text-sm font-bold text-slate-700 mb-4 flex items-center justify-between">
                     ① 部屋サイズ別稼働率
-                    <span class="ml-2 text-xs font-normal text-slate-500 bg-slate-100 px-2 py-1 rounded">利用の偏り</span>
+                    <span class="text-xs font-normal text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200">偏りの確認</span>
                 </h3>
                 <div class="chart-container">
                     <canvas id="roomUsageChart"></canvas>
                 </div>
-                <div class="mt-4 p-3 bg-slate-50 rounded text-sm text-slate-600">
-                    <strong>分析:</strong> 「5人以上用」が最も高く(32.3%)、「3-4人用」が最も低い(20.7%)。大人数会議室の予約難易度が高い状態です。
+                <div class="mt-4 p-3 bg-slate-50 border border-slate-100 rounded text-xs text-slate-600 leading-relaxed">
+                    <strong class="text-slate-700">分析:</strong> 「5人以上用」が36.6%と最も高く、ここがボトルネック。「3-4人用」は21.8%と比較的空きがある。
                 </div>
             </div>
 
             <!-- Chart: Hourly Bottleneck -->
-            <div class="bg-white rounded-xl card-shadow p-6">
-                <h3 class="text-md font-bold text-slate-700 mb-4 flex items-center">
+            <div class="bg-white rounded-lg card-shadow p-6">
+                <h3 class="text-sm font-bold text-slate-700 mb-4 flex items-center justify-between">
                     ② 時間帯別失敗率
-                    <span class="ml-2 text-xs font-normal text-slate-500 bg-slate-100 px-2 py-1 rounded text-rose-600 font-bold">異常検知</span>
+                    <span class="text-xs font-normal text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200">ピークの特定</span>
                 </h3>
                 <div class="chart-container">
                     <canvas id="hourlyFailureChart"></canvas>
                 </div>
-                <div class="mt-4 p-3 bg-rose-50 border border-rose-100 rounded text-sm text-rose-800">
-                    <strong>警告:</strong> 12:00の失敗率が82.9%に達しています。会議ではなく「昼食場所としての占有」が疑われる異常値です。
+                <div class="mt-4 p-3 bg-slate-50 border border-slate-100 rounded text-xs text-slate-600 leading-relaxed">
+                    <strong class="text-slate-700">分析:</strong> 14:00台の失敗率が20%を超えており、午後の定例会議帯に需要が極集中している。
                 </div>
             </div>
         </section>
 
-        <!-- 4. Improvement Action Plan -->
-        <section class="bg-white rounded-xl card-shadow p-8 border-t-8 border-indigo-600">
-            <h2 class="section-title"><span class="section-icon">🚀</span>改善アクションプラン</h2>
-            <p class="text-sm text-slate-600 mb-6">
-                「昼の異常混雑」の解消と、一度離脱したユーザーを「おまかせ」に引き戻す施策を提案します。
+        <!-- 4. Advanced Analysis (Placeholder for Future Data) -->
+        <section class="bg-slate-50 border border-dashed border-slate-300 rounded-lg p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="section-title border-none m-0 p-0 text-slate-600"><span class="section-icon">🔬</span>深掘り要因分析（準備中データ）</h2>
+                <span class="text-xs bg-slate-200 text-slate-600 px-2 py-1 rounded">次回以降の実装予定エリア</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 opacity-60 grayscale">
+                <div class="bg-white p-4 rounded border border-slate-200">
+                    <h4 class="font-bold text-slate-600 text-xs mb-2">拒否された部屋ランキング</h4>
+                    <!-- Data updated for HQ scenario (Large rooms bottleneck) -->
+                    <div class="h-24 bg-slate-50 flex items-center justify-center text-xs text-slate-400 border border-slate-100">Graph Placeholder: Room C (大会議室) (68件)</div>
+                </div>
+                <div class="bg-white p-4 rounded border border-slate-200">
+                    <h4 class="font-bold text-slate-600 text-xs mb-2">設備検索ログ分析</h4>
+                    <div class="h-24 bg-slate-50 flex items-center justify-center text-xs text-slate-400 border border-slate-100">Graph Placeholder: 大型モニター需要 55%</div>
+                </div>
+                <div class="bg-white p-4 rounded border border-slate-200">
+                    <h4 class="font-bold text-slate-600 text-xs mb-2">実利用人数乖離</h4>
+                    <div class="h-24 bg-slate-50 flex items-center justify-center text-xs text-slate-400 border border-slate-100">Graph Placeholder: 8人部屋の3人以下利用率</div>
+                </div>
+            </div>
+            <p class="text-center text-xs text-slate-400 mt-4">
+                ※現在、設備ログおよび部屋ごとの個別拒否データを収集中です。これらが揃い次第、「なぜ大会議室が足りないか」を特定します。
+            </p>
+        </section>
+
+        <!-- 5. Improvement Action Plan -->
+        <section class="bg-white rounded-lg card-shadow p-6">
+            <h2 class="section-title"><span class="section-icon">🚀</span>稼働率・有効活用に向けた改善アクション</h2>
+            <p class="text-sm text-slate-500 mb-6">
+                現状のデータ分析に基づき、来月実行すべき具体的な施策と期待効果を提案します。
             </p>
 
-            <div class="space-y-6">
+            <div class="space-y-4">
                 <!-- Action 1: Priority High -->
-                <div class="flex flex-col md:flex-row gap-4 p-4 border border-rose-200 rounded-lg bg-rose-50/50">
-                    <div class="md:w-1/4 flex flex-col justify-center items-center text-center border-r border-rose-200 pr-4">
-                        <span class="bg-rose-600 text-white text-xs font-bold px-2 py-1 rounded mb-2">緊急</span>
-                        <div class="text-3xl">🕛</div>
-                        <h4 class="font-bold text-rose-900 mt-2">昼利用の制限/値上げ</h4>
+                <div class="flex flex-col md:flex-row gap-4 p-4 border border-slate-200 rounded bg-white hover:bg-slate-50 transition-colors">
+                    <div class="md:w-1/4 flex flex-col justify-center items-center text-center border-r border-slate-100 pr-4">
+                        <span class="bg-slate-800 text-white text-[10px] font-bold px-2 py-0.5 rounded mb-2 uppercase tracking-wide">Priority: High</span>
+                        <div class="text-2xl text-slate-400">💰</div>
+                        <h4 class="font-bold text-slate-700 mt-2 text-sm">ポイント設定変更</h4>
                     </div>
                     <div class="md:w-3/4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <h5 class="text-xs font-bold text-slate-500 uppercase">現状の課題 (Fact)</h5>
-                                <p class="text-sm text-slate-700 font-medium">12:00台の予約失敗率 82.9%</p>
-                                <p class="text-xs text-slate-500 mt-1">実質的に予約不能。占有リスク大。</p>
+                                <h5 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">現状の課題 (Fact)</h5>
+                                <p class="text-sm text-slate-700 font-medium">「5人以上用」部屋の不足</p>
+                                <p class="text-xs text-slate-500 mt-0.5">予約失敗率39.4%の主要因。一方で中規模部屋は空いている。</p>
                             </div>
                             <div>
-                                <h5 class="text-xs font-bold text-slate-500 uppercase">実行アクション (Action)</h5>
-                                <p class="text-sm text-indigo-700 font-bold">11:30-13:30のポイント消費を3倍設定</p>
-                                <p class="text-xs text-slate-500 mt-1">不要な占有を排除し、緊急会議のみに絞る。</p>
+                                <h5 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">実行アクション (Action)</h5>
+                                <p class="text-sm text-slate-800 font-bold">「5人以上用」の消費ポイントを2倍に増額</p>
+                                <p class="text-xs text-slate-500 mt-0.5">不要不急の大会議室利用を抑制し、中規模部屋へ誘導。</p>
                             </div>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-rose-200">
-                            <h5 class="text-xs font-bold text-slate-500 uppercase">期待される効果 (Impact)</h5>
-                            <p class="text-sm text-slate-700">
-                                昼時間帯の稼働適正化、および失敗率の劇的改善 (-40pt)
+                        <div class="mt-3 pt-2 border-t border-slate-100">
+                            <h5 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">期待される効果 (Impact)</h5>
+                            <p class="text-xs text-slate-600">
+                                予約失敗率の改善 (-15pt) および 大会議室の適正利用化
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Action 2: Priority Medium -->
-                <div class="flex flex-col md:flex-row gap-4 p-4 border border-indigo-100 rounded-lg bg-white">
-                    <div class="md:w-1/4 flex flex-col justify-center items-center text-center border-r border-indigo-100 pr-4">
-                        <span class="bg-indigo-500 text-white text-xs font-bold px-2 py-1 rounded mb-2">重要</span>
-                        <div class="text-3xl">🤖</div>
-                        <h4 class="font-bold text-indigo-800 mt-2">おまかせCP展開</h4>
+                <div class="flex flex-col md:flex-row gap-4 p-4 border border-slate-200 rounded bg-white hover:bg-slate-50 transition-colors">
+                    <div class="md:w-1/4 flex flex-col justify-center items-center text-center border-r border-slate-100 pr-4">
+                        <span class="bg-slate-200 text-slate-600 text-[10px] font-bold px-2 py-0.5 rounded mb-2 uppercase tracking-wide">Priority: Mid</span>
+                        <div class="text-2xl text-slate-400">🎁</div>
+                        <h4 class="font-bold text-slate-700 mt-2 text-sm">おまかせCP</h4>
                     </div>
                     <div class="md:w-3/4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <h5 class="text-xs font-bold text-slate-500 uppercase">現状の課題 (Fact)</h5>
-                                <p class="text-sm text-slate-700 font-medium">おまかせ利用率 8.5% (件数)</p>
-                                <p class="text-xs text-slate-500 mt-1">普及率(36.4%)に対し利用が定着していない。</p>
+                                <h5 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">現状の課題 (Fact)</h5>
+                                <p class="text-sm text-slate-700 font-medium">おまかせ利用率の低迷 (10.7%)</p>
+                                <p class="text-xs text-slate-500 mt-0.5">手動予約が多く、隙間時間が有効活用されていない。</p>
                             </div>
                             <div>
-                                <h5 class="text-xs font-bold text-slate-500 uppercase">実行アクション (Action)</h5>
-                                <p class="text-sm text-indigo-700 font-bold">「おまかせ予約」利用でポイント半額還元</p>
-                                <p class="text-xs text-slate-500 mt-1">コストメリットを再提示し、離脱層を引き戻す。</p>
+                                <h5 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">実行アクション (Action)</h5>
+                                <p class="text-sm text-slate-800 font-bold">おまかせ予約時のポイント還元CP</p>
+                                <p class="text-xs text-slate-500 mt-0.5">おまかせ選択で消費ゼロ。混雑緩和への協力を促す。</p>
                             </div>
+                        </div>
+                        <div class="mt-3 pt-2 border-t border-slate-100">
+                            <h5 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">期待される効果 (Impact)</h5>
+                            <p class="text-xs text-slate-600">
+                                おまかせ利用率の向上 (目標30%) と予約詰まりの解消
+                            </p>
                         </div>
                     </div>
                 </div>
 
+                <!-- Action 3: Future -->
+                <div class="flex flex-col md:flex-row gap-4 p-4 border border-dashed border-slate-300 rounded bg-slate-50 opacity-75">
+                    <div class="md:w-1/4 flex flex-col justify-center items-center text-center border-r border-slate-200 pr-4">
+                        <span class="bg-slate-200 text-slate-400 text-[10px] font-bold px-2 py-0.5 rounded mb-2 uppercase tracking-wide">Pending</span>
+                        <div class="text-2xl text-slate-400">📊</div>
+                        <h4 class="font-bold text-slate-500 mt-2 text-sm">詳細データ分析</h4>
+                    </div>
+                    <div class="md:w-3/4 flex items-center">
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            「5人部屋が本当に5人で使われているか」を確認するため、実利用人数のログ取得を開始します。
+                        </p>
+                    </div>
+                </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-slate-500 text-sm">
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-slate-400 text-xs">
         <p>&copy; 2026 Reserve Any Operation Team</p>
     </footer>
 
     <script>
+        // --- Chart Configurations (Mapped to HQ Data: Report 1/2) ---
+
+        function wrapLabel(label) { return label; }
+
         Chart.defaults.font.family = "'Noto Sans JP', sans-serif";
-        Chart.defaults.color = '#64748B';
+        Chart.defaults.color = '#64748B'; 
 
         const commonPlugins = {
-            legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } },
+            legend: { 
+                position: 'bottom', 
+                labels: { 
+                    usePointStyle: true, 
+                    padding: 20,
+                    boxWidth: 8,
+                    color: '#64748B' 
+                } 
+            },
             tooltip: {
-                callbacks: {
-                    title: function(tooltipItems) {
-                        const item = tooltipItems[0];
-                        let label = item.chart.data.labels[item.dataIndex];
-                        if (Array.isArray(label)) return label.join(' ');
-                        return label;
-                    }
-                }
+                backgroundColor: '#1E293B',
+                titleColor: '#F8FAFC',
+                bodyColor: '#F8FAFC',
+                padding: 10,
+                cornerRadius: 4,
+                displayColors: false
             }
         };
 
-        // 1. Room Utilization (Data from Report 5)
+        // 1. Room Utilization (HQ Data)
+        // 5人以上: 36.6%, 3-4人: 21.8%, 2人: 29.7%
         new Chart(document.getElementById('roomUsageChart'), {
             type: 'bar',
             data: {
                 labels: ['5人以上用', '3-4人用', '2人用'],
                 datasets: [{
                     label: '稼働率 (%)',
-                    // Data: 5人(32.3), 3-4人(20.7), 2人(27.2)
-                    data: [32.3, 20.7, 27.2],
-                    backgroundColor: ['#A78BFA', '#CBD5E1', '#818CF8'],
-                    borderRadius: 4
+                    data: [36.6, 21.8, 29.7],
+                    backgroundColor: ['#475569', '#CBD5E1', '#94A3B8'], // Slate 600, 300, 400
+                    borderRadius: 2
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: commonPlugins,
-                scales: { y: { beginAtZero: true, max: 50 }, x: { grid: { display: false } } }
+                scales: { 
+                    y: { 
+                        beginAtZero: true, 
+                        max: 50,
+                        grid: { color: '#F1F5F9' }, 
+                        ticks: { color: '#94A3B8' } 
+                    }, 
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#64748B' }
+                    } 
+                }
             }
         });
 
-        // 2. Hourly Failure (Data from Report 5)
+        // 2. Hourly Failure (HQ Data)
+        // Peak at 14:00 (20.3%), 09:00 (12.6%)
         new Chart(document.getElementById('hourlyFailureChart'), {
             type: 'line',
             data: {
                 labels: ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'],
                 datasets: [{
                     label: '予約失敗率 (%)',
-                    // Interpolated from snippet: 12:00(82.9), 18:00(45.3), 14:00(12.3)
-                    data: [10.0, 5.0, 15.0, 82.9, 34.7, 12.3, 10.0, 5.0, 18.2, 45.3],
-                    borderColor: '#F43F5E',
-                    backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                    data: [12.6, 5.5, 4.0, 8.2, 5.0, 20.3, 8.5, 4.5, 3.0, 1.5],
+                    borderColor: '#475569', // Slate 600
+                    backgroundColor: 'rgba(71, 85, 105, 0.1)', 
                     borderWidth: 2,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#475569',
+                    pointRadius: 3,
                     fill: true,
                     tension: 0.3
                 }]
@@ -274,7 +344,18 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: commonPlugins,
-                scales: { y: { beginAtZero: true, max: 100 }, x: { grid: { display: false } } }
+                scales: { 
+                    y: { 
+                        beginAtZero: true, 
+                        max: 30,
+                        grid: { color: '#F1F5F9' },
+                        ticks: { color: '#94A3B8' }
+                    }, 
+                    x: { 
+                        grid: { display: false },
+                        ticks: { color: '#64748B' }
+                    } 
+                }
             }
         });
     </script>
