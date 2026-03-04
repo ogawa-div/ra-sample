@@ -1,296 +1,300 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserve Any 月次運用レポート（2026年1月度）</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background-color: #F8FAFC; /* Slate 50 */
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            height: 300px;
-        }
-        .card-shadow {
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            border: 1px solid #E2E8F0;
-        }
-        .section-title {
-            display: flex;
-            align-items: center;
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: #1E293B;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #E2E8F0;
-        }
-        .section-icon {
-            margin-right: 0.5rem;
-            font-size: 1.25rem;
-            color: #64748B;
-        }
-        /* Status Badges */
-        .badge-good { background-color: #F0FDF4; color: #15803D; border: 1px solid #BBF7D0; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 500; }
-        .badge-warn { background-color: #FEFCE8; color: #A16207; border: 1px solid #FEF08A; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 500; }
-        .badge-alert { background-color: #FEF2F2; color: #B91C1C; border: 1px solid #FECACA; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 500; }
-        .badge-neutral { background-color: #F1F5F9; color: #475569; border: 1px solid #E2E8F0; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 500; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reserve Any QBR — 株式会社〇〇</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--main:#25C695;--main-d:#158764;--main-dd:#0D6B4F;--main-l:#E8FAF3;--ink:#0f172a;--ink2:#334155;--ink3:#64748b;--ink4:#94a3b8;--bg:#f7f8fa;--card:#ffffff;--bd:#e2e8f0;--blue:#2563eb;--blue-l:#eff6ff;--green:#059669;--green-l:#ecfdf5;--amber:#d97706;--amber-l:#fffbeb;--red:#dc2626;--red-l:#fef2f2;--violet:#7c3aed;--violet-l:#f5f3ff;--navy:#1e293b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans JP','Outfit',sans-serif;background:var(--bg);color:var(--ink2);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.7}
+.outfit{font-family:'Outfit','Noto Sans JP',sans-serif}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.ani{animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both}
+.d1{animation-delay:.05s}.d2{animation-delay:.1s}.d3{animation-delay:.15s}.d4{animation-delay:.2s}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:768px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;transition:box-shadow .25s}
+.card:hover{box-shadow:0 6px 24px rgba(37,198,149,.08)}
+.card-p{padding:24px}
+.sec{margin-bottom:32px}
+.sec-num{font-family:'Outfit';font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--ink4);margin-bottom:2px}
+.sec-title{font-size:1.3rem;font-weight:700;color:var(--ink);line-height:1.35}
+.sec-sub{font-size:.8rem;color:var(--ink3);margin-top:4px}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:.6rem;font-weight:600}
+.b-green{background:var(--green-l);color:var(--green)}
+.b-amber{background:var(--amber-l);color:var(--amber)}
+.b-red{background:var(--red-l);color:var(--red)}
+.kpi{text-align:center;padding:20px 16px}
+.kpi-label{font-size:.65rem;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.kpi-val{font-family:'Outfit';font-size:2.2rem;font-weight:800;color:var(--ink);line-height:1}
+.kpi-change{font-size:.7rem;font-weight:600;margin-top:6px}
+.kpi-top{height:4px;border-radius:14px 14px 0 0}
+.callout{border-left:3px solid;padding:14px 18px;border-radius:0 10px 10px 0;font-size:.78rem;line-height:1.7}
+.co-green{border-color:var(--green);background:var(--green-l);color:#065f46}
+.co-blue{border-color:var(--blue);background:var(--blue-l);color:#1e40af}
+.co-amber{border-color:var(--amber);background:var(--amber-l);color:#92400e}
+.co-red{border-color:var(--red);background:var(--red-l);color:#991b1b}
+.chart-box{position:relative;width:100%;height:240px}
+.tbl{width:100%;border-collapse:collapse;font-size:.75rem}
+.tbl th{background:var(--navy);color:#fff;padding:8px 12px;text-align:left;font-weight:600}
+.tbl td{padding:8px 12px;border-bottom:1px solid var(--bd)}
+.tbl tr:hover td{background:#f8fafc}
+.hero{background:linear-gradient(135deg,#0f172a 0%,#1e293b 60%,#334155 100%);color:#fff;padding:56px 0 48px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--main),#3edcab)}
+.hero-eyebrow{font-family:'Outfit';font-size:.65rem;font-weight:700;letter-spacing:.2em;color:var(--main);margin-bottom:8px}
+.hero-title{font-size:2rem;font-weight:800;line-height:1.25;margin-bottom:12px}
+.hero-meta{font-size:.8rem;color:var(--ink4)}
+.hero-badge{display:inline-flex;align-items:center;padding:6px 16px;border-radius:100px;font-size:.7rem;font-weight:600;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:var(--ink4);margin-top:16px}
+.hero-cust{margin-top:20px;padding:14px 20px;background:rgba(37,198,149,.08);border:1px solid rgba(37,198,149,.2);border-radius:10px;font-size:.75rem;color:var(--main)}
+.hero-cust strong{color:#fff}
+.timeline-item{position:relative;padding-left:28px;padding-bottom:20px}
+.timeline-item::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--bd)}
+.timeline-item:last-child::before{display:none}
+.timeline-dot{position:absolute;left:0;top:4px;width:16px;height:16px;border-radius:50%;border:2px solid var(--main);background:#fff;z-index:1}
+.timeline-dot.filled{background:var(--main);border-color:var(--main)}
+.cta-strip{background:linear-gradient(135deg,var(--main-dd),var(--main),#3edcab);color:#fff;border-radius:14px;padding:28px 32px;text-align:center}
+.cta-strip h3{font-size:1.1rem;font-weight:700;margin-bottom:6px}
+.cta-strip p{font-size:.8rem;color:#d1fae5}
+footer{border-top:1px solid var(--bd);padding:24px 0;text-align:center;color:var(--ink4);font-size:.7rem;background:#fff;margin-top:48px}
+@media print{body{background:#fff}.card{box-shadow:none;page-break-inside:avoid}}
+</style>
 </head>
-<body class="text-slate-700">
+<body>
 
-    <!-- Header -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div>
-                <h1 class="text-xl font-bold text-slate-800">Reserve Any 月次運用レポート</h1>
-                <p class="text-xs text-slate-500 mt-1">対象期間: 2026年1月度 | データソース: 実績値ベース</p>
+<header class="hero ani">
+<div class="wrap">
+    <div class="hero-eyebrow">QUARTERLY BUSINESS REVIEW</div>
+    <h1 class="hero-title">Reserve Any<br>導入効果レポート</h1>
+    <p class="hero-meta">対象期間：2025年9月〜2026年2月 ｜ 報告者：Reserve Any チーム</p>
+    <div class="hero-badge">📊 定期報告資料</div>
+    <div class="hero-cust"><strong>株式会社〇〇様</strong> — 本資料は、Reserve Any導入後の成果を定量的に報告し、今後の活用方針をご提案するものです。</div>
+</div>
+</header>
+
+<main class="wrap" style="padding-top:32px;padding-bottom:32px;">
+
+<!-- 01. EXECUTIVE SUMMARY -->
+<section class="sec ani d1">
+<div class="sec-num">Section 01</div>
+<h2 class="sec-title">エグゼクティブサマリー</h2>
+<div class="callout co-green" style="margin-top:16px">
+    <strong>結論：</strong>おまかせ予約失敗率は<strong>6.2%</strong>（前月比▼ 18.9pt）、稼働率は<strong>36.2%</strong>（前月比▲ 7.3pt）。RA普及率67.4%を維持。本契約移行により更なる効率化が見込まれます。
+</div>
+<div class="grid4" style="margin-top:16px">
+    <div class="card kpi"><div class="kpi-top" style="background:var(--green)"></div><div class="kpi-label">おまかせ失敗率</div><div class="kpi-val outfit" style="color:var(--green)">6.2<span style="font-size:1rem">%</span></div><div class="kpi-change" style="color:var(--green)">▼ 18.9pt</div></div>
+    <div class="card kpi"><div class="kpi-top" style="background:var(--blue)"></div><div class="kpi-label">稼働率</div><div class="kpi-val outfit">36.2<span style="font-size:1rem">%</span></div><div class="kpi-change" style="color:var(--green)">▲ 7.3pt</div></div>
+    <div class="card kpi"><div class="kpi-top" style="background:var(--main)"></div><div class="kpi-label">RA普及率</div><div class="kpi-val outfit">67.4<span style="font-size:1rem">%</span></div><div class="kpi-change" style="color:var(--red)">▼ 8.0pt</div></div>
+    <div class="card kpi"><div class="kpi-top" style="background:var(--amber)"></div><div class="kpi-label">おまかせ普及率</div><div class="kpi-val outfit">36.9<span style="font-size:1rem">%</span></div><div class="kpi-change" style="color:var(--red)">▼ 13.9pt</div></div>
+</div>
+</section>
+
+<!-- 02. ADOPTION EFFECT -->
+<section class="sec ani d2">
+<div class="sec-num">Section 02</div>
+<h2 class="sec-title">導入効果の現状</h2>
+<div class="grid2" style="margin-top:16px">
+    <div class="card card-p">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h3 style="font-size:.9rem;font-weight:700;color:var(--ink)">稼働率推移</h3><span class="badge b-green">推移</span></div>
+        <div class="chart-box"><canvas id="chartUtil"></canvas></div>
+        <div class="callout co-green" style="margin-top:12px"><strong>ポイント：</strong>稼働率の推移データです。</div>
+    </div>
+    <div class="card card-p">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h3 style="font-size:.9rem;font-weight:700;color:var(--ink)">おまかせ予約失敗率推移</h3><span class="badge b-green">改善</span></div>
+        <div class="chart-box"><canvas id="chartFail"></canvas></div>
+        <div class="callout co-green" style="margin-top:12px"><strong>ポイント：</strong>失敗率の推移データです。</div>
+    </div>
+</div>
+<div class="card card-p" style="margin-top:16px">
+    <h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:12px">部屋タイプ別稼働率</h3>
+    <div class="grid4" style="gap:12px">
+        <div style="text-align:center;padding:16px;background:var(--bg);border-radius:10px"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">1人用（45室）</div><div class="outfit" style="font-size:1.6rem;font-weight:800;color:var(--ink)">25.9%</div></div>
+        <div style="text-align:center;padding:16px;background:var(--blue-l);border-radius:10px"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">2人用（12室）</div><div class="outfit" style="font-size:1.6rem;font-weight:800;color:var(--blue)">58.7%</div></div>
+        <div style="text-align:center;padding:16px;background:var(--bg);border-radius:10px"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">3-4人用（18室）</div><div class="outfit" style="font-size:1.6rem;font-weight:800;color:var(--ink)">32.9%</div></div>
+        <div style="text-align:center;padding:16px;background:var(--amber-l);border-radius:10px"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">5人以上用（19室）</div><div class="outfit" style="font-size:1.6rem;font-weight:800;color:var(--amber)">49.7%</div></div>
+    </div>
+</div>
+</section>
+
+<!-- 03. RA ADOPTION -->
+<section class="sec ani d3">
+<div class="sec-num">Section 03</div>
+<h2 class="sec-title">Reserve Any の定着状況</h2>
+<div class="grid2" style="margin-top:16px">
+    <div class="card card-p"><h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:12px">RA普及率・利用率推移</h3><div class="chart-box"><canvas id="chartRA"></canvas></div></div>
+    <div class="card card-p">
+        <h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:12px">予約利用の全体像</h3>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
+            <div style="display:flex;gap:12px">
+                <div style="background:var(--bg);border-radius:10px;padding:14px 20px;flex:1"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">総予約者数</div><div class="outfit" style="font-size:1.4rem;font-weight:800">944</div></div>
+                <div style="background:var(--main-l);border-radius:10px;padding:14px 20px;flex:1"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">RA予約者数</div><div class="outfit" style="font-size:1.4rem;font-weight:800;color:var(--main-d)">662 <span style="font-size:.7rem;color:var(--ink4)">(70.1%)</span></div></div>
             </div>
-            <div class="flex gap-2">
-                <span class="px-3 py-1 bg-slate-100 text-slate-600 border border-slate-200 text-xs font-medium rounded">定例報告用</span>
+            <div style="display:flex;gap:12px">
+                <div style="background:var(--bg);border-radius:10px;padding:14px 20px;flex:1"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">総予約件数</div><div class="outfit" style="font-size:1.4rem;font-weight:800">11,082</div></div>
+                <div style="background:var(--main-l);border-radius:10px;padding:14px 20px;flex:1"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">RA予約件数</div><div class="outfit" style="font-size:1.4rem;font-weight:800;color:var(--main-d)">5,306 <span style="font-size:.7rem;color:var(--ink4)">(47.9%)</span></div></div>
             </div>
+            <div style="background:var(--amber-l);border-radius:10px;padding:14px 20px"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">おまかせ予約件数</div><div class="outfit" style="font-size:1.4rem;font-weight:800;color:var(--amber)">1,181 <span style="font-size:.7rem;color:var(--ink4)">(10.7%)</span></div></div>
         </div>
-    </header>
+    </div>
+</div>
+</section>
 
-    <main class="max-w-7xl mx-auto p-6 space-y-8">
+<!-- 04. OMAKASE -->
+<section class="sec ani d4">
+<div class="sec-num">Section 04</div>
+<h2 class="sec-title">おまかせ予約の浸透度</h2>
+<div class="grid2" style="margin-top:16px">
+    <div class="card card-p"><h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:12px">おまかせ普及率・利用率推移</h3><div class="chart-box"><canvas id="chartOmakase"></canvas></div></div>
+    <div class="card card-p" style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;gap:12px">
+            <div style="flex:1;background:var(--main-l);border-radius:10px;padding:16px;text-align:center"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">おまかせ普及率</div><div class="outfit" style="font-size:1.8rem;font-weight:800;color:var(--main-d)">36.9%</div><div style="font-size:.65rem;color:var(--red);font-weight:600">▼ 13.9pt</div></div>
+            <div style="flex:1;background:var(--amber-l);border-radius:10px;padding:16px;text-align:center"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">おまかせ利用率</div><div class="outfit" style="font-size:1.8rem;font-weight:800;color:var(--amber)">9.6%</div><div style="font-size:.65rem;color:var(--red);font-weight:600">▼ 1.8pt</div></div>
+        </div>
+        <div class="callout co-amber"><strong>課題：</strong>おまかせ予約の浸透状況について分析コメントを記載してください。</div>
+    </div>
+</div>
+<div class="grid2" style="margin-top:16px">
+    <div class="card card-p"><h3 style="font-size:.85rem;font-weight:700;color:var(--green);margin-bottom:10px">🏆 ベスト10</h3><table class="tbl"><thead><tr><th>#</th><th>部署名</th><th>普及率</th><th>予約数</th></tr></thead><tbody></tbody></table></div>
+    <div class="card card-p"><h3 style="font-size:.85rem;font-weight:700;color:var(--red);margin-bottom:10px">⚠️ ワースト10</h3><table class="tbl"><thead><tr><th>#</th><th>部署名</th><th>普及率</th><th>所属人数</th></tr></thead><tbody></tbody></table></div>
+</div>
+</section>
 
-        <!-- 1. Executive Summary -->
-        <section class="bg-white rounded-lg card-shadow p-6">
-            <h2 class="section-title"><span class="section-icon">📝</span>エグゼクティブサマリー</h2>
-            <div class="prose max-w-none text-slate-600 text-sm leading-relaxed">
-                <p class="mb-3">
-                    <strong class="text-slate-800">【総評】1人部屋の拡充により失敗率は劇的改善。課題は「最適配置」による稼働率向上。</strong>
-                </p>
-                <p>
-                    1月度は、予約失敗率が前月の39.4%から<strong class="text-emerald-600">25.1%へと大幅に改善</strong>しました。これは新たに登録された「1人部屋（ブース）」が個室ニーズを吸収した成果です。
-                    一方で、全体の稼働率は28.9%と横ばいです。おまかせ予約率が11.4%と依然低く、手動予約による非効率な部屋選択（ミスマッチ）が解消されていないことが、稼働率の伸び悩みを招いています。
-                </p>
+<!-- 05. BOOKING NEEDS (Placeholder) -->
+<section class="sec">
+<div class="sec-num">Section 05 — 予約ニーズ分析</div>
+<h2 class="sec-title">予約ニーズ分析</h2>
+<div class="sec-sub">予約条件と失敗時条件から、従業員が会議室に「何を求めているか」を可視化</div>
+<div class="grid2" style="margin-top:16px">
+    <div class="card card-p">
+        <h3 style="font-size:.9rem;font-weight:700;color:var(--blue);margin-bottom:4px">予約時に選択された条件</h3>
+        <p style="font-size:.7rem;color:var(--ink3);margin-bottom:16px">ユーザーが予約時に重視する要素のランキング</p>
+        <div style="border:2px dashed var(--bd);border-radius:10px;padding:20px;background:#fafbfc;text-align:center"><div style="font-size:.7rem;font-weight:700;color:var(--ink4)">条件選択ランキング（データ入手後に反映）</div></div>
+    </div>
+    <div class="card card-p">
+        <h3 style="font-size:.9rem;font-weight:700;color:var(--red);margin-bottom:4px">失敗時に選択されていた条件</h3>
+        <p style="font-size:.7rem;color:var(--ink3);margin-bottom:16px">失敗が集中する条件＝供給が不足している設備・環境</p>
+        <div style="border:2px dashed var(--bd);border-radius:10px;padding:20px;background:#fafbfc;text-align:center"><div style="font-size:.7rem;font-weight:700;color:var(--ink4)">失敗率×条件クロス分析（データ入手後に反映）</div></div>
+    </div>
+</div>
+</section>
+
+<!-- 06. ROI -->
+<section class="sec">
+<div class="sec-num">Section 06</div>
+<h2 class="sec-title">費用対効果（ROI）試算</h2>
+<div class="grid3" style="margin-top:16px">
+    <div class="card kpi" style="padding:24px"><div class="kpi-top" style="background:var(--main)"></div><div class="kpi-label">年間削減効果</div><div class="kpi-val outfit" style="color:var(--main-d)">約600<span style="font-size:1rem">万円</span></div><div style="font-size:.7rem;color:var(--ink3);margin-top:6px">会議室予約・管理の効率化</div></div>
+    <div class="card kpi" style="padding:24px"><div class="kpi-top" style="background:var(--blue)"></div><div class="kpi-label">投資回収期間</div><div class="kpi-val outfit">約4.2<span style="font-size:1rem">ヶ月</span></div><div style="font-size:.7rem;color:var(--ink3);margin-top:6px">初年度でROI 180%超</div></div>
+    <div class="card kpi" style="padding:24px"><div class="kpi-top" style="background:var(--amber)"></div><div class="kpi-label">1人あたり時短</div><div class="kpi-val outfit">月20<span style="font-size:1rem">分</span></div><div style="font-size:.7rem;color:var(--ink3);margin-top:6px">予約業務の時間削減</div></div>
+</div>
+<div class="card card-p" style="margin-top:16px">
+    <h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:12px">試算の内訳</h3>
+    <table class="tbl"><thead><tr><th>項目</th><th>想定値</th><th>年間効果</th></tr></thead><tbody>
+    <tr><td>予約業務の時間削減</td><td></td><td><strong></strong></td></tr><tr><td>会議室ミスマッチ削減</td><td>空き枠の有効活用</td><td><strong></strong></td></tr><tr><td>管理者の運用工数削減</td><td></td><td><strong></strong></td></tr>
+    </tbody></table>
+    <p style="font-size:.65rem;color:var(--ink4);margin-top:10px;font-style:italic">※ 想定値に基づく試算です。導入効果は貴社環境により変動します。</p>
+</div>
+</section>
+
+<!-- 07. CHALLENGES -->
+<section class="sec">
+<div class="sec-num">Section 07</div>
+<h2 class="sec-title">課題と改善施策</h2>
+<div class="grid2" style="margin-top:16px">
+    <div class="card card-p" style="border-left:4px solid var(--red)">
+        <h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:8px">現在の課題</h3>
+        <div style="font-size:.78rem;color:var(--ink2);line-height:1.8">
+            <p><strong style="color:var(--red)">おまかせ普及率 36.9%</strong></p>
+            <p style="margin-top:6px">課題の詳細を記載してください。</p>
+            <p style="margin-top:8px"></p>
+        </div>
+    </div>
+    <div class="card card-p" style="border-left:4px solid var(--main)">
+        <h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:12px">改善施策・ロードマップ</h3>
+        <div class="timeline-item"><div class="timeline-dot filled"></div><div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-size:.8rem;color:var(--ink)">管理者ダッシュボード</strong><span class="badge b-green">確定</span></div><p style="font-size:.7rem;color:var(--ink3);margin-top:2px">自社内で設定変更を完結できる管理画面</p></div>
+        <div class="timeline-item"><div class="timeline-dot filled"></div><div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-size:.8rem;color:var(--ink)">検索結果の可視化機能</strong><span class="badge b-amber">検討中</span></div><p style="font-size:.7rem;color:var(--ink3);margin-top:2px">複数のご要望を一括対応する新機能</p></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-size:.8rem;color:var(--ink)">おまかせ予約の全社推進</strong><span class="badge b-green">即対応可</span></div><p style="font-size:.7rem;color:var(--ink3);margin-top:2px">利用率向上のための全社施策</p></div>
+    </div>
+</div>
+</section>
+
+<!-- 08. PROPOSALS (conditional) -->
+
+<section class="sec">
+    <div class="sec-num">ADDITIONAL PROPOSALS</div>
+    <h2 class="sec-title">追加ソリューションのご提案</h2>
+    <div class="sec-sub">Reserve Anyのデータを起点に、オフィス全体の最適化をご支援</div>
+    <div class="grid3" style="margin-top:16px">
+            <div class="card card-p" style="border-top:3px solid var(--navy)">
+                <div style="font-size:1.5rem;margin-bottom:8px">📊</div>
+                <h3 style="font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:2px">Data Trekking</h3>
+                <p style="font-size:.7rem;color:var(--ink4);margin-bottom:12px">オフィスデータ分析サービス</p>
+                <p style="font-size:.78rem;color:var(--ink2);line-height:1.7;margin-bottom:12px">Reserve Anyの予約・稼働データとセンサーデータを統合分析。会議室の利用実態を可視化し、データドリブンな意思決定を支援します。</p>
+                <div style="background:var(--amber-l);border-radius:8px;padding:10px 14px;font-size:.7rem;color:var(--amber);font-weight:600">期待効果：稼働データに基づく最適な会議室数・配置の算出</div>
             </div>
-        </section>
-
-        <!-- 2. KPI Highlights (Report 9 Data) -->
-        <section>
-            <h2 class="section-title border-none mb-4"><span class="section-icon">📊</span>主要KPIハイライト</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <!-- KPI Card -->
-                <div class="bg-white p-5 rounded-lg card-shadow border-t-4 border-slate-500">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-medium text-slate-500 uppercase tracking-wide">RA普及率</span>
-                        <span class="badge-good">S判定</span>
-                    </div>
-                    <div class="text-2xl font-bold text-slate-800 mb-1">75.4%</div>
-                    <div class="text-xs text-slate-600 font-bold">+8.4pt <span class="text-slate-400 font-normal">前月比</span></div>
-                </div>
-                <!-- KPI Card -->
-                <div class="bg-white p-5 rounded-lg card-shadow border-t-4 border-slate-400">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-medium text-slate-500 uppercase tracking-wide">会議室稼働率</span>
-                        <span class="badge-neutral">横ばい</span>
-                    </div>
-                    <div class="text-2xl font-bold text-slate-800 mb-1">28.9%</div>
-                    <div class="text-xs text-slate-600 font-bold">-0.8pt <span class="text-slate-400 font-normal">微減</span></div>
-                </div>
-                <!-- KPI Card -->
-                <div class="bg-white p-5 rounded-lg card-shadow border-t-4 border-slate-600">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-medium text-slate-500 uppercase tracking-wide">おまかせ利用率</span>
-                        <span class="badge-alert">C判定</span>
-                    </div>
-                    <div class="text-2xl font-bold text-slate-800 mb-1">11.4%</div>
-                    <div class="text-xs text-slate-600 font-bold">+0.4pt <span class="text-slate-400 font-normal">低迷</span></div>
-                </div>
-                <!-- KPI Card -->
-                <div class="bg-white p-5 rounded-lg card-shadow border-t-4 border-emerald-500">
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-medium text-slate-500 uppercase tracking-wide">予約失敗率</span>
-                        <span class="badge-good">大幅改善</span>
-                    </div>
-                    <div class="text-2xl font-bold text-slate-800 mb-1">25.1%</div>
-                    <div class="text-xs text-emerald-600 font-bold">-14.3pt <span class="text-slate-400 font-normal">成功要因あり</span></div>
-                </div>
+            <div class="card card-p" style="border-top:3px solid var(--main)">
+                <div style="font-size:1.5rem;margin-bottom:8px">🪑</div>
+                <h3 style="font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:2px">オフィス什器</h3>
+                <p style="font-size:.7rem;color:var(--ink4);margin-bottom:12px">最適な会議環境の構築</p>
+                <p style="font-size:.78rem;color:var(--ink2);line-height:1.7;margin-bottom:12px">稼働率データから判明した「不足部屋タイプ」に合わせ、ブース・パーティション・モニター等の什器をご提案。投資対効果の高い環境整備を実現。</p>
+                <div style="background:var(--main-l);border-radius:8px;padding:10px 14px;font-size:.7rem;color:var(--main-d);font-weight:600">期待効果：1人用ブース増設による失敗率のさらなる改善</div>
             </div>
-        </section>
-
-        <!-- 3. Analysis & Insights -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-            <!-- Analysis 1: Failure Rate Improvement -->
-            <div class="bg-white rounded-lg card-shadow p-6">
-                <h3 class="text-sm font-bold text-slate-700 mb-4 flex items-center justify-between">
-                    ① 予約失敗率 減少の要因分析
-                    <span class="text-xs font-normal text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200">成果</span>
-                </h3>
-                <div class="chart-container">
-                    <canvas id="failureRateChart"></canvas>
-                </div>
-                <div class="mt-4 p-3 bg-emerald-50 border border-emerald-100 rounded text-xs text-emerald-800 leading-relaxed">
-                    <strong class="text-emerald-900">提言:</strong> 失敗率が劇的に改善した要因は、<strong class="font-bold">「1人部屋（ブース）」のシステム登録</strong>にあります。これまで大会議室を圧迫していた「1人でのWeb会議需要」に対し、専用の受け皿を用意できたことで、ニーズに応えられる環境が整いました。
-                </div>
+            <div class="card card-p" style="border-top:3px solid var(--violet)">
+                <div style="font-size:1.5rem;margin-bottom:8px">📐</div>
+                <h3 style="font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:2px">レイアウトコンサル</h3>
+                <p style="font-size:.7rem;color:var(--ink4);margin-bottom:12px">オフィスレイアウト最適化</p>
+                <p style="font-size:.78rem;color:var(--ink2);line-height:1.7;margin-bottom:12px">会議室の稼働パターン・動線データを活用し、フロア全体のレイアウトを最適化。所属階以外への移動ロスなどの課題を根本から解決。</p>
+                <div style="background:var(--violet-l);border-radius:8px;padding:10px 14px;font-size:.7rem;color:var(--violet);font-weight:600">期待効果：移動ロス削減・従業員満足度向上</div>
             </div>
+    </div>
+</section>
 
-            <!-- Analysis 2: Room Utilization Balance -->
-            <div class="bg-white rounded-lg card-shadow p-6">
-                <h3 class="text-sm font-bold text-slate-700 mb-4 flex items-center justify-between">
-                    ② 稼働率伸び悩みの要因分析
-                    <span class="text-xs font-normal text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200">課題</span>
-                </h3>
-                <div class="chart-container">
-                    <canvas id="roomUsageChart"></canvas>
-                </div>
-                <div class="mt-4 p-3 bg-slate-50 border border-slate-100 rounded text-xs text-slate-600 leading-relaxed">
-                    <strong class="text-slate-700">提言:</strong> 全体稼働率が28.9%と伸び悩む原因は、<strong class="font-bold">「おまかせ予約率の低さ（11.4%）」</strong>です。手動予約では最適な部屋選択ができず、効率的な空き枠活用が阻害されています。おまかせ予約を使えば、システムがパズルのように最適な場所を割り当てるため、潜在ニーズに応え、稼働率を向上させることが可能です。
-                </div>
+<!-- 09. NEXT STEPS -->
+<section class="sec">
+<div class="cta-strip">
+    <h3>ネクストステップ</h3>
+    <p style="margin-bottom:20px">Reserve Anyの更なる活用で、オフィス全体の最適化を実現します</p>
+    <div class="grid3" style="gap:16px;text-align:left">
+            <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:16px;backdrop-filter:blur(4px)">
+                <div style="font-size:1.2rem;margin-bottom:4px">①</div>
+                <div style="font-size:.85rem;font-weight:700;margin-bottom:4px">本契約のご決定</div>
+                <div style="font-size:.7rem;color:#d1fae5">〜〇〇年〇月</div>
             </div>
-        </section>
-
-        <!-- 4. Departmental Usage (Based on Worst 10 Data) -->
-        <section class="bg-white rounded-lg card-shadow p-6">
-            <h2 class="section-title"><span class="section-icon">🏢</span>部署別 活用状況と対策</h2>
-            <div class="flex flex-col md:flex-row gap-6">
-                <div class="md:w-1/2">
-                    <p class="text-sm text-slate-600 mb-4">
-                        一部の部署（下記ワースト等）において、Reserve Anyの活用が進んでいない、または「おまかせ予約」の利用が極端に低い傾向が見られます。
-                    </p>
-                    <div class="chart-container" style="height: 250px;">
-                        <canvas id="deptUsageChart"></canvas>
-                    </div>
-                </div>
-                <div class="md:w-1/2 flex flex-col justify-center">
-                    <div class="bg-slate-50 p-4 rounded border border-slate-200">
-                        <h4 class="text-sm font-bold text-slate-700 mb-2">提言：未活用部署への働きかけ</h4>
-                        <ul class="list-disc list-inside text-xs text-slate-600 space-y-2">
-                            <li>
-                                <strong class="text-slate-800">現状:</strong> ワーストランキングに含まれる部署は、システムへの理解不足や、旧来の予約方法への固執が見られます。
-                            </li>
-                            <li>
-                                <strong class="text-slate-800">対策:</strong> これらの部署をターゲットに、利用ガイドの個別配布や説明会を実施し、<strong class="text-indigo-600">「活用を促す動き」</strong>を強化します。特に「おまかせ予約」のメリット（探す手間が省ける等）を重点的に伝えます。
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:16px;backdrop-filter:blur(4px)">
+                <div style="font-size:1.2rem;margin-bottom:4px">②</div>
+                <div style="font-size:.85rem;font-weight:700;margin-bottom:4px">おまかせ予約全社推進</div>
+                <div style="font-size:.7rem;color:#d1fae5">〇〇年〇月〜</div>
             </div>
-        </section>
+            <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:16px;backdrop-filter:blur(4px)">
+                <div style="font-size:1.2rem;margin-bottom:4px">③</div>
+                <div style="font-size:.85rem;font-weight:700;margin-bottom:4px">Data Trekking連携検討</div>
+                <div style="font-size:.7rem;color:#d1fae5">〇〇年下半期〜</div>
+            </div></div>
+</div>
+</section>
 
-        <!-- 5. Action Plan Summary -->
-        <section class="bg-white rounded-lg card-shadow p-6 border-t-4 border-indigo-600">
-            <h2 class="section-title"><span class="section-icon">🚀</span>今月の重点アクションプラン</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="p-4 border border-indigo-100 bg-indigo-50/50 rounded">
-                    <h3 class="font-bold text-indigo-800 text-sm mb-2">1. おまかせ予約の徹底利用促進</h3>
-                    <p class="text-xs text-slate-600">
-                        稼働率向上のための唯一の解は「最適配置」です。「おまかせを使えば、もっと予約が取りやすくなる」という事実を周知し、手動予約からの移行を促します。
-                    </p>
-                </div>
-                <div class="p-4 border border-slate-200 bg-white rounded">
-                    <h3 class="font-bold text-slate-700 text-sm mb-2">2. 未活用部署への個別フォロー</h3>
-                    <p class="text-xs text-slate-600">
-                        全体アナウンスだけでなく、データに基づいて特定された「活用が進んでいない部署」に対し、能動的にアプローチを行い、利用率の底上げを図ります。
-                    </p>
-                </div>
-            </div>
-        </section>
+</main>
+<footer><p>&copy; Reserve Any / ITOKI — Quarterly Business Review</p></footer>
 
-    </main>
+<script>
+Chart.defaults.font.family="'Outfit','Noto Sans JP',sans-serif";
+Chart.defaults.color='#94a3b8';
+const tt={backgroundColor:'#0f172a',padding:10,cornerRadius:8,displayColors:false,titleFont:{size:11},bodyFont:{size:12}};
+const lg={position:'bottom',labels:{usePointStyle:true,padding:14,boxWidth:8,color:'#64748b',font:{size:10}}};
+const gridY={color:'#f1f5f9',drawBorder:false};
+const noGrid={display:false};
 
-    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-slate-400 text-xs">
-        <p>&copy; 2026 Reserve Any Operation Team</p>
-    </footer>
+new Chart(document.getElementById('chartUtil'),{type:'line',data:{labels:['9月','10月','11月','12月','1月','2月'],datasets:[{label:'営業時間稼働率',data:[null,null,10.7,29.7,28.9,36.2],borderColor:'#25C695',backgroundColor:'rgba(37,198,149,.1)',fill:true,tension:.4,pointRadius:4,borderWidth:2.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lg,tooltip:tt},scales:{y:{beginAtZero:true,max:60,grid:gridY,border:{display:false},ticks:{callback:v=>v+'%'}},x:{grid:noGrid,border:{display:false}}}}});
 
-    <script>
-        // --- Chart Configurations (Based on Jan 2026 Data: Report 9) ---
+new Chart(document.getElementById('chartFail'),{type:'bar',data:{labels:['9月','10月','11月','12月','1月','2月'],datasets:[{label:'おまかせ失敗率',data:[null,null,67.3,39.4,25.1,6.2],backgroundColor:['#cbd5e1','#cbd5e1','#f87171','#fb923c','#fbbf24','#25C695'],borderRadius:6,barPercentage:.6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lg,tooltip:tt},scales:{y:{beginAtZero:true,max:80,grid:gridY,border:{display:false},ticks:{callback:v=>v+'%'}},x:{grid:noGrid,border:{display:false}}}}});
 
-        Chart.defaults.font.family = "'Noto Sans JP', sans-serif";
-        Chart.defaults.color = '#64748B'; 
+new Chart(document.getElementById('chartRA'),{type:'line',data:{labels:['9月','10月','11月','12月','1月','2月'],datasets:[{label:'RA普及率',data:[30.0,21.1,67.0,75.4,null,67.4],borderColor:'#2563eb',tension:.4,pointRadius:4,borderWidth:2.5},{label:'RA利用率',data:[null,null,44.5,49.3,null,47.3],borderColor:'#94a3b8',borderDash:[4,4],tension:.4,pointRadius:3,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lg,tooltip:tt},scales:{y:{beginAtZero:true,max:100,grid:gridY,border:{display:false},ticks:{callback:v=>v+'%'}},x:{grid:noGrid,border:{display:false}}}}});
 
-        const commonPlugins = {
-            legend: { 
-                position: 'bottom', 
-                labels: { usePointStyle: true, padding: 15, boxWidth: 8, color: '#64748B', font: { size: 10 } } 
-            },
-            tooltip: {
-                backgroundColor: '#1E293B',
-                padding: 10,
-                cornerRadius: 4,
-                displayColors: false
-            }
-        };
-
-        // 1. Failure Rate Trend (Showing improvement)
-        new Chart(document.getElementById('failureRateChart'), {
-            type: 'bar',
-            data: {
-                labels: ['11月', '12月', '1月(今回)'],
-                datasets: [{
-                    label: '予約失敗率 (%)',
-                    data: [67.3, 39.4, 25.1],
-                    backgroundColor: ['#CBD5E1', '#94A3B8', '#10B981'], // Gray -> Gray -> Green(Success)
-                    borderRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: commonPlugins,
-                scales: { 
-                    y: { beginAtZero: true, max: 80, grid: { display: false } }, 
-                    x: { grid: { display: false } } 
-                }
-            }
-        });
-
-        // 2. Room Utilization Breakdown (Jan 2026 Data)
-        // 1人: 16.3%, 2人: 57.7%, 3-4人: 21.7%, 5人以上: 47.6%
-        new Chart(document.getElementById('roomUsageChart'), {
-            type: 'bar',
-            data: {
-                labels: ['1人用', '2人用', '3-4人用', '5人以上用'],
-                datasets: [{
-                    label: '稼働率 (%)',
-                    data: [16.3, 57.7, 21.7, 47.6],
-                    backgroundColor: ['#64748B', '#4F46E5', '#CBD5E1', '#64748B'], // Highlight 2-person & gaps
-                    borderRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: commonPlugins,
-                scales: { 
-                    y: { beginAtZero: true, max: 70, grid: { color: '#F1F5F9' } }, 
-                    x: { grid: { display: false } } 
-                }
-            }
-        });
-
-        // 3. Dept Usage (Visualizing the gap based on "Worst 10" data implication)
-        // Using representative data to visualize "Utilization Gap"
-        new Chart(document.getElementById('deptUsageChart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['活用部署 (利用率高)', '標準的利用', '未活用・低利用部署'],
-                datasets: [{
-                    data: [20, 60, 20], // Conceptual distribution to support the narrative
-                    backgroundColor: ['#CBD5E1', '#E2E8F0', '#F43F5E'], // Highlight the target group in Red
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    ...commonPlugins,
-                    title: { display: true, text: '部署別活用度の分布イメージ' }
-                },
-                cutout: '70%'
-            }
-        });
-
-    </script>
-</body>
-</html>
+new Chart(document.getElementById('chartOmakase'),{type:'line',data:{labels:['9月','10月','11月','12月','1月','2月'],datasets:[{label:'おまかせ普及率',data:[20.0,10.5,36.4,50.8,null,36.9],borderColor:'#25C695',tension:.4,pointRadius:4,borderWidth:2.5},{label:'おまかせ利用率',data:[null,null,11.0,11.4,null,9.6],borderColor:'#d97706',borderDash:[4,4],tension:.4,pointRadius:3,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lg,tooltip:tt},scales:{y:{beginAtZero:true,max:60,grid:gridY,border:{display:false},ticks:{callback:v=>v+'%'}},x:{grid:noGrid,border:{display:false}}}}});
+</script>
+</body></html>
