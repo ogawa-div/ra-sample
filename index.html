@@ -3,298 +3,619 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reserve Any QBR — 株式会社〇〇</title>
+<title>Reserve Any | ROI Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--main:#25C695;--main-d:#158764;--main-dd:#0D6B4F;--main-l:#E8FAF3;--ink:#0f172a;--ink2:#334155;--ink3:#64748b;--ink4:#94a3b8;--bg:#f7f8fa;--card:#ffffff;--bd:#e2e8f0;--blue:#2563eb;--blue-l:#eff6ff;--green:#059669;--green-l:#ecfdf5;--amber:#d97706;--amber-l:#fffbeb;--red:#dc2626;--red-l:#fef2f2;--violet:#7c3aed;--violet-l:#f5f3ff;--navy:#1e293b}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans JP','Outfit',sans-serif;background:var(--bg);color:var(--ink2);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.7}
-.outfit{font-family:'Outfit','Noto Sans JP',sans-serif}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.ani{animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both}
-.d1{animation-delay:.05s}.d2{animation-delay:.1s}.d3{animation-delay:.15s}.d4{animation-delay:.2s}
-.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-@media(max-width:768px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;transition:box-shadow .25s}
-.card:hover{box-shadow:0 6px 24px rgba(37,198,149,.08)}
-.card-p{padding:24px}
-.sec{margin-bottom:32px}
-.sec-num{font-family:'Outfit';font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--ink4);margin-bottom:2px}
-.sec-title{font-size:1.3rem;font-weight:700;color:var(--ink);line-height:1.35}
-.sec-sub{font-size:.8rem;color:var(--ink3);margin-top:4px}
-.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:.6rem;font-weight:600}
-.b-green{background:var(--green-l);color:var(--green)}
-.b-amber{background:var(--amber-l);color:var(--amber)}
-.b-red{background:var(--red-l);color:var(--red)}
-.kpi{text-align:center;padding:20px 16px}
-.kpi-label{font-size:.65rem;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
-.kpi-val{font-family:'Outfit';font-size:2.2rem;font-weight:800;color:var(--ink);line-height:1}
-.kpi-change{font-size:.7rem;font-weight:600;margin-top:6px}
-.kpi-top{height:4px;border-radius:14px 14px 0 0}
-.callout{border-left:3px solid;padding:14px 18px;border-radius:0 10px 10px 0;font-size:.78rem;line-height:1.7}
-.co-green{border-color:var(--green);background:var(--green-l);color:#065f46}
-.co-blue{border-color:var(--blue);background:var(--blue-l);color:#1e40af}
-.co-amber{border-color:var(--amber);background:var(--amber-l);color:#92400e}
-.co-red{border-color:var(--red);background:var(--red-l);color:#991b1b}
-.chart-box{position:relative;width:100%;height:240px}
-.tbl{width:100%;border-collapse:collapse;font-size:.75rem}
-.tbl th{background:var(--navy);color:#fff;padding:8px 12px;text-align:left;font-weight:600}
-.tbl td{padding:8px 12px;border-bottom:1px solid var(--bd)}
-.tbl tr:hover td{background:#f8fafc}
-.hero{background:linear-gradient(135deg,#0f172a 0%,#1e293b 60%,#334155 100%);color:#fff;padding:56px 0 48px;position:relative;overflow:hidden}
-.hero::after{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--main),#3edcab)}
-.hero-eyebrow{font-family:'Outfit';font-size:.65rem;font-weight:700;letter-spacing:.2em;color:var(--main);margin-bottom:8px}
-.hero-title{font-size:2rem;font-weight:800;line-height:1.25;margin-bottom:12px}
-.hero-meta{font-size:.8rem;color:var(--ink4)}
-.hero-badge{display:inline-flex;align-items:center;padding:6px 16px;border-radius:100px;font-size:.7rem;font-weight:600;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:var(--ink4);margin-top:16px}
-.hero-cust{margin-top:20px;padding:14px 20px;background:rgba(37,198,149,.08);border:1px solid rgba(37,198,149,.2);border-radius:10px;font-size:.75rem;color:var(--main)}
-.hero-cust strong{color:#fff}
-.timeline-item{position:relative;padding-left:28px;padding-bottom:20px}
-.timeline-item::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--bd)}
-.timeline-item:last-child::before{display:none}
-.timeline-dot{position:absolute;left:0;top:4px;width:16px;height:16px;border-radius:50%;border:2px solid var(--main);background:#fff;z-index:1}
-.timeline-dot.filled{background:var(--main);border-color:var(--main)}
-.cta-strip{background:linear-gradient(135deg,var(--main-dd),var(--main),#3edcab);color:#fff;border-radius:14px;padding:28px 32px;text-align:center}
-.cta-strip h3{font-size:1.1rem;font-weight:700;margin-bottom:6px}
-.cta-strip p{font-size:.8rem;color:#d1fae5}
-footer{border-top:1px solid var(--bd);padding:24px 0;text-align:center;color:var(--ink4);font-size:.7rem;background:#fff;margin-top:48px}
-@media print{body{background:#fff}.card{box-shadow:none;page-break-inside:avoid}}
+        /* =========================================
+           ▼ ブラウザ表示用 CSS (変更なし)
+           ========================================= */
+        :root { 
+            --navy: #1f3864; 
+            --dark-navy: #152745;
+            --gold-bg: #fffdef; 
+            --accent-red: #c00000; 
+            --light-gray: #f4f6f9; 
+            --creation-blue: #0070c0; 
+            --border-color: #e0e0e0;
+        }
+        body { 
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif; 
+            background: var(--light-gray); 
+            margin: 0; 
+            padding: 0; 
+            color: #333; 
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+        }
+ 
+        .app-header {
+            background: var(--navy);
+            color: white;
+            padding: 0 20px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        .app-title { font-size: 18px; font-weight: bold; letter-spacing: 1px; }
+        .header-right { display: flex; align-items: center; gap: 15px; }
+        .user-info { font-size: 13px; opacity: 0.9; }
+        .logout-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .logout-btn:hover { background: rgba(255,255,255,0.1); border-color: white; }
+ 
+        .main-wrapper { 
+            display: flex; 
+            height: calc(100vh - 60px); 
+        }
+ 
+        .left-panel {
+            width: 380px; 
+            background: white;
+            border-right: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-y: auto;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+ 
+        .right-panel {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: var(--light-gray);
+        }
+ 
+        h2 { 
+            font-size: 15px; 
+            color: var(--navy); 
+            border-left: 4px solid var(--navy); 
+            padding-left: 10px; 
+            margin: 0 0 15px 0; 
+        }
+        .panel-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+ 
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #555; }
+        input[type="text"], select, input[type="number"] {
+            width: 100%; box-sizing: border-box;
+            padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;
+        }
+        input[type="range"] { width: 100%; accent-color: var(--navy); margin: 10px 0; cursor: pointer; }
+        .num-wrap { display: flex; align-items: center; gap: 5px; justify-content: flex-end; }
+        .num-wrap input { width: 80px; text-align: right; }
+ 
+        .task-list { background: var(--gold-bg); padding: 10px; border: 1px solid #e0d8b0; border-radius: 6px; }
+        .task-item { display: flex; margin-bottom: 8px; font-size: 12px; cursor: pointer; }
+        .task-item input { margin-right: 8px; margin-top: 2px; }
+ 
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .kpi-card {
+            background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);
+            text-align: center; position: relative;
+            cursor: help;
+        }
+        .kpi-label { font-size: 12px; color: #888; display: block; margin-bottom: 5px; }
+        .kpi-value { font-size: 24px; font-weight: bold; color: var(--navy); }
+        .roi-badge {
+            position: absolute; top: -10px; right: -10px;
+            background: var(--accent-red); color: white;
+            padding: 4px 10px; font-size: 12px; font-weight: bold; border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+ 
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .chart-box {
+            background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);
+            height: 250px;
+        }
+        .chart-title { font-size: 12px; font-weight: bold; text-align: center; margin-bottom: 10px; color: #555; }
+        .canvas-wrapper { height: 200px; position: relative; }
+ 
+        .sol-item {
+            font-size: 13px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dashed #eee;
+            line-height: 1.5;
+        }
+        .sol-title { color: var(--navy); font-weight: bold; display: block; margin-bottom: 4px; }
+ 
+        .print-btn {
+            background: var(--navy); color: white; border: none; padding: 15px;
+            width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px;
+            transition: background 0.2s;
+        }
+        .print-btn:hover { background: var(--dark-navy); }
+        .print-btn:disabled { opacity: 0.6; cursor: wait; }
+ 
+        /* 計算ロジック表示用（画面では非表示） */
+        .logic-info { display: none; }
+ 
+        #loginOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--navy); z-index: 9999;
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
+        }
+        .login-box {
+            background: white; padding: 40px; border-radius: 8px; text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 320px;
+        }
+        .login-input { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-size: 16px; }
+        .login-btn { background: var(--accent-red); color: white; border: none; padding: 12px; width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .login-error { color: red; font-size: 12px; margin-top: 10px; display: none; }
+ 
+ 
+        /* =========================================
+           ▼▼▼ 印刷設定 ▼▼▼
+           ========================================= */
+        @media print {
+            @page { 
+                size: A4 landscape; 
+                margin: 0; 
+            }
+            body { 
+                width: 1550px !important; 
+                height: 100% !important;
+                background: white; 
+                -webkit-print-color-adjust: exact; 
+                zoom: 60%; 
+                display: block !important;
+                padding: 20mm !important; 
+                overflow: hidden !important; 
+            }
+            /* 非表示要素 */
+            .print-btn, #loginOverlay, input[type="range"], .logout-btn, .user-info { display: none !important; }
+            .input-group .no-print-section { display: none !important; }
+ 
+            .main-wrapper { 
+                display: flex !important; 
+                flex-direction: row !important; 
+                height: auto !important; 
+                gap: 30px; 
+                margin: 0;
+                width: 100% !important;
+                box-sizing: border-box; 
+            }
+ 
+            .app-header { 
+                position: static; height: 60px; background: var(--navy) !important; color: white !important; 
+                margin: -20mm -20mm 25px -20mm; 
+                padding: 0 30px;
+                border-bottom: none; justify-content: center; 
+                width: calc(100% + 40mm) !important;
+            }
+            .app-title { font-size: 30px; }
+            /* 左パネル */
+            .left-panel { 
+                width: 24% !important; 
+                flex-shrink: 0; 
+                border: 2px solid var(--navy) !important; 
+                background: #f8f9fa !important; padding: 25px !important; 
+                display: block !important; border-radius: 10px;
+                height: auto;
+            }
+            /* 運用課題リスト(選択項目のみ表示) */
+            .task-list { background: transparent !important; border: none; padding: 0; margin-bottom: 15px; }
+            .task-item { display: none !important; }
+            .task-item.checked-row { 
+                display: flex !important; 
+                align-items: flex-start; 
+                margin-bottom: 6px; 
+                font-size: 13px !important; 
+                color: #333; 
+                line-height: 1.4; 
+            }
+            .task-item input { display: none; }
+            .task-item span::before { content: "☑ "; margin-right: 5px; color: var(--navy); font-weight: bold; }
+ 
+            .input-group { margin-bottom: 15px; border-bottom: 1px dotted #ccc; padding-bottom: 5px; }
+            .input-group label { margin-bottom: 2px; color: #555; font-size: 13px; }
+            input[type="number"], select, input[type="text"] { 
+                border: none !important; background: transparent !important; font-weight: bold; font-size: 18px; 
+                text-align: right; padding: 0; box-shadow: none; appearance: none; -webkit-appearance: none;
+            }
+            .num-wrap { justify-content: flex-end; }
+            #clientNameInput { text-align: left; font-size: 26px !important; color: var(--navy); border-bottom: 3px solid var(--accent-red) !important; margin-bottom: 25px; }
+ 
+            /* 右パネル */
+            .right-panel { 
+                width: 74% !important; 
+                flex-grow: 0 !important;
+                padding: 0 !important; 
+                background: white !important; 
+                border: none; 
+                overflow: visible !important;
+                min-width: 0 !important; 
+            }
+            .kpi-grid { 
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important; 
+                gap: 20px; 
+                margin-bottom: 25px; 
+                width: 100% !important;
+            }
+            .kpi-card { padding: 15px; border: 1px solid #ddd; box-shadow: none; background: white; }
+            .kpi-label { font-size: 14px; }
+            .kpi-value { font-size: 32px; }
+            .roi-badge { padding: 5px 12px; font-size: 13px; }
+            .charts-container { 
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important; 
+                gap: 20px !important; 
+                margin-bottom: 25px !important; 
+                width: 100% !important;
+                box-sizing: border-box;
+            }
+            .chart-box { 
+                height: 260px !important; 
+                padding: 10px !important; 
+                border: 1px solid #ddd !important; 
+                width: 100% !important;
+                box-sizing: border-box !important;
+                background: white !important;
+                min-width: 0 !important;
+                page-break-inside: avoid;
+            }
+            .canvas-wrapper { 
+                position: relative !important;
+                height: 220px !important; 
+                width: 100% !important;
+            }
+            .chart-title { font-size: 14px; margin-bottom: 10px; }
+            canvas { width: 100% !important; height: 100% !important; max-width: 100% !important; }
+            .panel-card { box-shadow: none; border: 1px solid #ddd; padding: 25px; }
+            .sol-item { font-size: 14px; margin-bottom: 10px; padding-bottom: 5px; }
+            h2 { font-size: 16px; margin-bottom: 12px; padding-left: 10px; border-left-width: 5px; }
+ 
+            /* 計算ロジック注釈 */
+            .logic-info { 
+                display: block !important; 
+                margin-top: 30px;
+                padding-top: 15px;
+                border-top: 1px dotted #ccc;
+                font-size: 12px;
+                color: #666;
+            }
+            .logic-row { margin-bottom: 5px; display: inline-block; margin-right: 30px; }
+        }
 </style>
 </head>
 <body>
-
-<header class="hero ani">
-<div class="wrap">
-    <div class="hero-eyebrow">QUARTERLY BUSINESS REVIEW</div>
-    <h1 class="hero-title">Reserve Any<br>導入効果レポート</h1>
-    <p class="hero-meta">対象期間：2025年9月〜2026年2月 ｜ 報告者：Reserve Any チーム</p>
-    <div class="hero-badge">📊 定期報告資料</div>
-    <div class="hero-cust"><strong>株式会社〇〇様</strong> — 本資料は、Reserve Any導入後の成果を定量的に報告し、今後の活用方針をご提案するものです。</div>
+ 
+<div id="loginOverlay">
+<div class="login-box">
+<h3 style="color:var(--navy); margin-top:0;">RESERVE ANY</h3>
+<p style="font-size:12px; color:#666;">社員IDでログインしてください</p>
+<input type="text" id="idInput" class="login-input" placeholder="User ID">
+<button id="loginBtn" class="login-btn" onclick="executeLogin()">ログイン</button>
+<div id="loginError" class="login-error">IDが見つかりません</div>
+</div>
+</div>
+ 
+<header class="app-header">
+<div class="app-title">OFFICE OPTIMIZATION DASHBOARD</div>
+<div class="header-right">
+<div class="user-info">Login User: <span id="headerUserName" style="font-weight:bold;">Guest</span></div>
+<button onclick="logout()" class="logout-btn">ログアウト</button>
 </div>
 </header>
-
-<main class="wrap" style="padding-top:32px;padding-bottom:32px;">
-
-<!-- 01. EXECUTIVE SUMMARY -->
-<section class="sec ani d1">
-<div class="sec-num">Section 01</div>
-<h2 class="sec-title">エグゼクティブサマリー</h2>
-<div class="callout co-green" style="margin-top:16px">
-    <strong>結論：</strong>おまかせ予約失敗率は<strong>6.2%</strong>（前月比▼ 18.9pt）、稼働率は<strong>36.2%</strong>（前月比▲ 7.3pt）。RA普及率67.4%を維持。本契約移行により更なる効率化が見込まれます。
+ 
+<div class="main-wrapper">
+<div class="left-panel">
+<div style="grid-column: 1 / -1;">
+<label class="no-print-section">対象クライアント名</label>
+<input type="text" id="clientNameInput" placeholder="貴社名を入力" style="font-weight:bold; font-size:16px;">
 </div>
-<div class="grid4" style="margin-top:16px">
-    <div class="card kpi"><div class="kpi-top" style="background:var(--green)"></div><div class="kpi-label">おまかせ失敗率</div><div class="kpi-val outfit" style="color:var(--green)">6.2<span style="font-size:1rem">%</span></div><div class="kpi-change" style="color:var(--green)">▼ 18.9pt</div></div>
-    <div class="card kpi"><div class="kpi-top" style="background:var(--blue)"></div><div class="kpi-label">稼働率</div><div class="kpi-val outfit">36.2<span style="font-size:1rem">%</span></div><div class="kpi-change" style="color:var(--green)">▲ 7.3pt</div></div>
-    <div class="card kpi"><div class="kpi-top" style="background:var(--main)"></div><div class="kpi-label">RA普及率</div><div class="kpi-val outfit">67.4<span style="font-size:1rem">%</span></div><div class="kpi-change" style="color:var(--red)">▼ 8.0pt</div></div>
-    <div class="card kpi"><div class="kpi-top" style="background:var(--amber)"></div><div class="kpi-label">おまかせ普及率</div><div class="kpi-val outfit">36.9<span style="font-size:1rem">%</span></div><div class="kpi-change" style="color:var(--red)">▼ 13.9pt</div></div>
-</div>
-</section>
-
-<!-- 02. ADOPTION EFFECT -->
-<section class="sec ani d2">
-<div class="sec-num">Section 02</div>
-<h2 class="sec-title">導入効果の現状</h2>
-<div class="grid2" style="margin-top:16px">
-    <div class="card card-p">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h3 style="font-size:.9rem;font-weight:700;color:var(--ink)">稼働率推移</h3><span class="badge b-green">推移</span></div>
-        <div class="chart-box"><canvas id="chartUtil"></canvas></div>
-        <div class="callout co-green" style="margin-top:12px"><strong>ポイント：</strong>稼働率の推移データです。</div>
-    </div>
-    <div class="card card-p">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h3 style="font-size:.9rem;font-weight:700;color:var(--ink)">おまかせ予約失敗率推移</h3><span class="badge b-green">改善</span></div>
-        <div class="chart-box"><canvas id="chartFail"></canvas></div>
-        <div class="callout co-green" style="margin-top:12px"><strong>ポイント：</strong>失敗率の推移データです。</div>
-    </div>
-</div>
-<div class="card card-p" style="margin-top:16px">
-    <h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:12px">部屋タイプ別稼働率</h3>
-    <div class="grid4" style="gap:12px">
-        <div style="text-align:center;padding:16px;background:var(--bg);border-radius:10px"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">1人用（45室）</div><div class="outfit" style="font-size:1.6rem;font-weight:800;color:var(--ink)">25.9%</div></div>
-        <div style="text-align:center;padding:16px;background:var(--blue-l);border-radius:10px"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">2人用（12室）</div><div class="outfit" style="font-size:1.6rem;font-weight:800;color:var(--blue)">58.7%</div></div>
-        <div style="text-align:center;padding:16px;background:var(--bg);border-radius:10px"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">3-4人用（18室）</div><div class="outfit" style="font-size:1.6rem;font-weight:800;color:var(--ink)">32.9%</div></div>
-        <div style="text-align:center;padding:16px;background:var(--amber-l);border-radius:10px"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">5人以上用（19室）</div><div class="outfit" style="font-size:1.6rem;font-weight:800;color:var(--amber)">49.7%</div></div>
-    </div>
+<section>
+<h2>01. 運用課題(計算根拠)</h2>
+<div class="task-list">
+<label class="task-item"><input type="checkbox" class="task-check" onchange="calc()" checked><span>広い会議室を少人数で利用</span></label>
+<label class="task-item"><input type="checkbox" class="task-check" onchange="calc()"><span>特定の部署・人が予約を独占</span></label>
+<label class="task-item"><input type="checkbox" class="task-check" onchange="calc()" checked><span>予約間の15-30分が無駄</span></label>
+<label class="task-item"><input type="checkbox" class="task-check" onchange="calc()"><span>増床判断の根拠がない</span></label>
 </div>
 </section>
-
-<!-- 03. RA ADOPTION -->
-<section class="sec ani d3">
-<div class="sec-num">Section 03</div>
-<h2 class="sec-title">Reserve Any の定着状況</h2>
-<div class="grid2" style="margin-top:16px">
-    <div class="card card-p"><h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:12px">RA普及率・利用率推移</h3><div class="chart-box"><canvas id="chartRA"></canvas></div></div>
-    <div class="card card-p">
-        <h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:12px">予約利用の全体像</h3>
-        <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
-            <div style="display:flex;gap:12px">
-                <div style="background:var(--bg);border-radius:10px;padding:14px 20px;flex:1"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">総予約者数</div><div class="outfit" style="font-size:1.4rem;font-weight:800">944</div></div>
-                <div style="background:var(--main-l);border-radius:10px;padding:14px 20px;flex:1"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">RA予約者数</div><div class="outfit" style="font-size:1.4rem;font-weight:800;color:var(--main-d)">662 <span style="font-size:.7rem;color:var(--ink4)">(70.1%)</span></div></div>
-            </div>
-            <div style="display:flex;gap:12px">
-                <div style="background:var(--bg);border-radius:10px;padding:14px 20px;flex:1"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">総予約件数</div><div class="outfit" style="font-size:1.4rem;font-weight:800">11,082</div></div>
-                <div style="background:var(--main-l);border-radius:10px;padding:14px 20px;flex:1"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">RA予約件数</div><div class="outfit" style="font-size:1.4rem;font-weight:800;color:var(--main-d)">5,306 <span style="font-size:.7rem;color:var(--ink4)">(47.9%)</span></div></div>
-            </div>
-            <div style="background:var(--amber-l);border-radius:10px;padding:14px 20px"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">おまかせ予約件数</div><div class="outfit" style="font-size:1.4rem;font-weight:800;color:var(--amber)">1,181 <span style="font-size:.7rem;color:var(--ink4)">(10.7%)</span></div></div>
-        </div>
-    </div>
+ 
+        <section>
+<h2>02. 算出前提条件</h2>
+<div class="input-group">
+<label>エリア単価 (円/坪)</label>
+<input type="number" id="tanka" value="48000" step="1000" oninput="calc()" placeholder="例: 48000">
+<div class="no-print-section" style="font-size:10px; color:#666; margin-top:6px; line-height:1.4;">
+<div style="display:flex; flex-wrap:wrap; gap:5px;">
+<span>参考：港区:6.3万</span> <span>千代田:6万</span> <span>渋谷:5万</span>
+<span>中央:5万</span> <span>新宿:4万</span> <span>品川:5万</span>
+</div>
+</div>
+</div>
+ 
+            <div class="input-group">
+<label>会議室数 (4坪/室)</label>
+<div class="num-wrap"><input type="number" id="roomCount" value="10" oninput="roomSlide.value=this.value; calc()"> 室</div>
+<input type="range" id="roomSlide" min="0" max="50" value="10" oninput="roomCount.value=this.value; calc()">
+</div>
+<div class="input-group">
+<label>個室ブース数 (0.5坪/室)</label>
+<div class="num-wrap"><input type="number" id="boothCount" value="4" oninput="boothSlide.value=this.value; calc()"> 台</div>
+<input type="range" id="boothSlide" min="0" max="50" value="4" oninput="boothCount.value=this.value; calc()">
+</div>
+<div class="input-group">
+<label>従業員数 (ID数)</label>
+<div class="num-wrap"><input type="number" id="idCount" value="100" oninput="idSlide.value=this.value; calc()"> 名</div>
+<input type="range" id="idSlide" min="10" max="1000" step="10" value="100" oninput="idCount.value=this.value; calc()">
+</div>
+<div class="input-group">
+<label>稼働率改善 (現在→目標)</label>
+<div class="num-wrap"><span style="font-size:12px; font-weight:bold;"><span id="dispBefore">60%</span> → <span id="dispAfter">75%</span></span></div>
+<input type="range" id="beforeSlide" min="10" max="90" value="60" oninput="updateRateLabel(); calc()">
+<input type="range" id="afterSlide" min="10" max="100" value="75" oninput="updateRateLabel(); calc()">
+<input type="hidden" id="beforeVal" value="60">
+<input type="hidden" id="afterVal" value="75">
+</div>
+<div class="input-group" style="border-top:1px dashed #ccc; padding-top:5px; margin-top:5px;">
+<label>月間資産維持費</label>
+<strong><span id="dispTotalOffice">0</span> 円</strong>
 </div>
 </section>
-
-<!-- 04. OMAKASE -->
-<section class="sec ani d4">
-<div class="sec-num">Section 04</div>
-<h2 class="sec-title">おまかせ予約の浸透度</h2>
-<div class="grid2" style="margin-top:16px">
-    <div class="card card-p"><h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:12px">おまかせ普及率・利用率推移</h3><div class="chart-box"><canvas id="chartOmakase"></canvas></div></div>
-    <div class="card card-p" style="display:flex;flex-direction:column;gap:16px">
-        <div style="display:flex;gap:12px">
-            <div style="flex:1;background:var(--main-l);border-radius:10px;padding:16px;text-align:center"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">おまかせ普及率</div><div class="outfit" style="font-size:1.8rem;font-weight:800;color:var(--main-d)">36.9%</div><div style="font-size:.65rem;color:var(--red);font-weight:600">▼ 13.9pt</div></div>
-            <div style="flex:1;background:var(--amber-l);border-radius:10px;padding:16px;text-align:center"><div style="font-size:.65rem;color:var(--ink4);font-weight:600">おまかせ利用率</div><div class="outfit" style="font-size:1.8rem;font-weight:800;color:var(--amber)">9.6%</div><div style="font-size:.65rem;color:var(--red);font-weight:600">▼ 1.8pt</div></div>
-        </div>
-        <div class="callout co-amber"><strong>課題：</strong>おまかせ予約の浸透状況について分析コメントを記載してください。</div>
-    </div>
+<button class="print-btn" onclick="handlePrintAndSave()">レポート保存・印刷</button>
 </div>
-<div class="grid2" style="margin-top:16px">
-    <div class="card card-p"><h3 style="font-size:.85rem;font-weight:700;color:var(--green);margin-bottom:10px">🏆 ベスト10</h3><table class="tbl"><thead><tr><th>#</th><th>部署名</th><th>普及率</th><th>予約数</th></tr></thead><tbody></tbody></table></div>
-    <div class="card card-p"><h3 style="font-size:.85rem;font-weight:700;color:var(--red);margin-bottom:10px">⚠️ ワースト10</h3><table class="tbl"><thead><tr><th>#</th><th>部署名</th><th>普及率</th><th>所属人数</th></tr></thead><tbody></tbody></table></div>
+ 
+    <div class="right-panel">
+<div class="kpi-grid">
+<div class="kpi-card" id="cardNetSaving" style="border: 2px solid var(--accent-red); background:#fff5f5;">
+<span class="roi-badge">ROI: <span id="roiPercent">0</span>%</span>
+<span class="kpi-label">月間コスト回収メリット</span>
+<span class="kpi-value" id="dispNetSaving" style="color:var(--accent-red)">0</span><span style="font-size:12px;">円 / 月</span>
 </div>
-</section>
-
-<!-- 05. BOOKING NEEDS (Placeholder) -->
-<section class="sec">
-<div class="sec-num">Section 05 — 予約ニーズ分析</div>
-<h2 class="sec-title">予約ニーズ分析</h2>
-<div class="sec-sub">予約条件と失敗時条件から、従業員が会議室に「何を求めているか」を可視化</div>
-<div class="grid2" style="margin-top:16px">
-    <div class="card card-p">
-        <h3 style="font-size:.9rem;font-weight:700;color:var(--blue);margin-bottom:4px">予約時に選択された条件</h3>
-        <p style="font-size:.7rem;color:var(--ink3);margin-bottom:16px">ユーザーが予約時に重視する要素のランキング</p>
-        <div style="border:2px dashed var(--bd);border-radius:10px;padding:20px;background:#fafbfc;text-align:center"><div style="font-size:.7rem;font-weight:700;color:var(--ink4)">条件選択ランキング（データ入手後に反映）</div></div>
-    </div>
-    <div class="card card-p">
-        <h3 style="font-size:.9rem;font-weight:700;color:var(--red);margin-bottom:4px">失敗時に選択されていた条件</h3>
-        <p style="font-size:.7rem;color:var(--ink3);margin-bottom:16px">失敗が集中する条件＝供給が不足している設備・環境</p>
-        <div style="border:2px dashed var(--bd);border-radius:10px;padding:20px;background:#fafbfc;text-align:center"><div style="font-size:.7rem;font-weight:700;color:var(--ink4)">失敗率×条件クロス分析（データ入手後に反映）</div></div>
-    </div>
+<div class="kpi-card" id="cardHour">
+<span class="kpi-label">創出される有効時間</span>
+<span class="kpi-value" id="dispHour" style="color:var(--creation-blue)">0</span><span style="font-size:12px;">時間 / 月</span>
+</div>
+<div class="kpi-card" id="cardGrossSaving">
+<span class="kpi-label">スペース資産活用価値</span>
+<span class="kpi-value" id="dispGrossSaving">0</span><span style="font-size:12px;">円 / 月</span>
+</div>
+</div>
+<div class="charts-container">
+<div class="chart-box"><div class="chart-title">費用対効果</div><div class="canvas-wrapper"><canvas id="costChart"></canvas></div></div>
+<div class="chart-box"><div class="chart-title">月間収支</div><div class="canvas-wrapper"><canvas id="netChart"></canvas></div></div>
+<div class="chart-box"><div class="chart-title">有効時間の増加</div><div class="canvas-wrapper"><canvas id="hourChart"></canvas></div></div>
+</div>
+<section class="solution-section panel-card">
+<h2>03. 導入効果レポート</h2>
+<div id="solList"></div>
+<div style="margin-top:20px; font-size:11px; color:#888; text-align:right;">
+                作成日: <span id="currentDate"></span> | Reserve Any ROI System
 </div>
 </section>
-
-<!-- 06. ROI -->
-<section class="sec">
-<div class="sec-num">Section 06</div>
-<h2 class="sec-title">費用対効果（ROI）試算</h2>
-<div class="grid3" style="margin-top:16px">
-    <div class="card kpi" style="padding:24px"><div class="kpi-top" style="background:var(--main)"></div><div class="kpi-label">年間削減効果</div><div class="kpi-val outfit" style="color:var(--main-d)">約600<span style="font-size:1rem">万円</span></div><div style="font-size:.7rem;color:var(--ink3);margin-top:6px">会議室予約・管理の効率化</div></div>
-    <div class="card kpi" style="padding:24px"><div class="kpi-top" style="background:var(--blue)"></div><div class="kpi-label">投資回収期間</div><div class="kpi-val outfit">約4.2<span style="font-size:1rem">ヶ月</span></div><div style="font-size:.7rem;color:var(--ink3);margin-top:6px">初年度でROI 180%超</div></div>
-    <div class="card kpi" style="padding:24px"><div class="kpi-top" style="background:var(--amber)"></div><div class="kpi-label">1人あたり時短</div><div class="kpi-val outfit">月20<span style="font-size:1rem">分</span></div><div style="font-size:.7rem;color:var(--ink3);margin-top:6px">予約業務の時間削減</div></div>
+<div class="logic-info">
+<strong>【算出ロジック参考】</strong><br>
+<span class="logic-row">● 月間コスト回収メリット ＝ スペース資産活用価値 － ツール利用料(人数×450円)</span>
+<span class="logic-row">● 創出される有効時間 ＝ 総稼働枠((会議室数＋ブース数)×8h×20日) × 稼働率改善幅</span>
+<span class="logic-row">● スペース資産活用価値 ＝ 月間資産維持費 × 稼働率改善幅</span>
 </div>
-<div class="card card-p" style="margin-top:16px">
-    <h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:12px">試算の内訳</h3>
-    <table class="tbl"><thead><tr><th>項目</th><th>想定値</th><th>年間効果</th></tr></thead><tbody>
-    <tr><td>予約業務の時間削減</td><td></td><td><strong></strong></td></tr><tr><td>会議室ミスマッチ削減</td><td>空き枠の有効活用</td><td><strong></strong></td></tr><tr><td>管理者の運用工数削減</td><td></td><td><strong></strong></td></tr>
-    </tbody></table>
-    <p style="font-size:.65rem;color:var(--ink4);margin-top:10px;font-style:italic">※ 想定値に基づく試算です。導入効果は貴社環境により変動します。</p>
 </div>
-</section>
-
-<!-- 07. CHALLENGES -->
-<section class="sec">
-<div class="sec-num">Section 07</div>
-<h2 class="sec-title">課題と改善施策</h2>
-<div class="grid2" style="margin-top:16px">
-    <div class="card card-p" style="border-left:4px solid var(--red)">
-        <h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:8px">現在の課題</h3>
-        <div style="font-size:.78rem;color:var(--ink2);line-height:1.8">
-            <p><strong style="color:var(--red)">おまかせ普及率 36.9%</strong></p>
-            <p style="margin-top:6px">課題の詳細を記載してください。</p>
-            <p style="margin-top:8px"></p>
-        </div>
-    </div>
-    <div class="card card-p" style="border-left:4px solid var(--main)">
-        <h3 style="font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:12px">改善施策・ロードマップ</h3>
-        <div class="timeline-item"><div class="timeline-dot filled"></div><div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-size:.8rem;color:var(--ink)">管理者ダッシュボード</strong><span class="badge b-green">確定</span></div><p style="font-size:.7rem;color:var(--ink3);margin-top:2px">自社内で設定変更を完結できる管理画面</p></div>
-        <div class="timeline-item"><div class="timeline-dot filled"></div><div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-size:.8rem;color:var(--ink)">検索結果の可視化機能</strong><span class="badge b-amber">検討中</span></div><p style="font-size:.7rem;color:var(--ink3);margin-top:2px">複数のご要望を一括対応する新機能</p></div>
-        <div class="timeline-item"><div class="timeline-dot"></div><div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-size:.8rem;color:var(--ink)">おまかせ予約の全社推進</strong><span class="badge b-green">即対応可</span></div><p style="font-size:.7rem;color:var(--ink3);margin-top:2px">利用率向上のための全社施策</p></div>
-    </div>
 </div>
-</section>
-
-<!-- 08. PROPOSALS (conditional) -->
-
-<section class="sec">
-    <div class="sec-num">ADDITIONAL PROPOSALS</div>
-    <h2 class="sec-title">追加ソリューションのご提案</h2>
-    <div class="sec-sub">Reserve Anyのデータを起点に、オフィス全体の最適化をご支援</div>
-    <div class="grid3" style="margin-top:16px">
-            <div class="card card-p" style="border-top:3px solid var(--navy)">
-                <div style="font-size:1.5rem;margin-bottom:8px">📊</div>
-                <h3 style="font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:2px">Data Trekking</h3>
-                <p style="font-size:.7rem;color:var(--ink4);margin-bottom:12px">オフィスデータ分析サービス</p>
-                <p style="font-size:.78rem;color:var(--ink2);line-height:1.7;margin-bottom:12px">Reserve Anyの予約・稼働データとセンサーデータを統合分析。会議室の利用実態を可視化し、データドリブンな意思決定を支援します。</p>
-                <div style="background:var(--amber-l);border-radius:8px;padding:10px 14px;font-size:.7rem;color:var(--amber);font-weight:600">期待効果：稼働データに基づく最適な会議室数・配置の算出</div>
-            </div>
-            <div class="card card-p" style="border-top:3px solid var(--main)">
-                <div style="font-size:1.5rem;margin-bottom:8px">🪑</div>
-                <h3 style="font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:2px">オフィス什器</h3>
-                <p style="font-size:.7rem;color:var(--ink4);margin-bottom:12px">最適な会議環境の構築</p>
-                <p style="font-size:.78rem;color:var(--ink2);line-height:1.7;margin-bottom:12px">稼働率データから判明した「不足部屋タイプ」に合わせ、ブース・パーティション・モニター等の什器をご提案。投資対効果の高い環境整備を実現。</p>
-                <div style="background:var(--main-l);border-radius:8px;padding:10px 14px;font-size:.7rem;color:var(--main-d);font-weight:600">期待効果：1人用ブース増設による失敗率のさらなる改善</div>
-            </div>
-            <div class="card card-p" style="border-top:3px solid var(--violet)">
-                <div style="font-size:1.5rem;margin-bottom:8px">📐</div>
-                <h3 style="font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:2px">レイアウトコンサル</h3>
-                <p style="font-size:.7rem;color:var(--ink4);margin-bottom:12px">オフィスレイアウト最適化</p>
-                <p style="font-size:.78rem;color:var(--ink2);line-height:1.7;margin-bottom:12px">会議室の稼働パターン・動線データを活用し、フロア全体のレイアウトを最適化。所属階以外への移動ロスなどの課題を根本から解決。</p>
-                <div style="background:var(--violet-l);border-radius:8px;padding:10px 14px;font-size:.7rem;color:var(--violet);font-weight:600">期待効果：移動ロス削減・従業員満足度向上</div>
-            </div>
-    </div>
-</section>
-
-<!-- 09. NEXT STEPS -->
-<section class="sec">
-<div class="cta-strip">
-    <h3>ネクストステップ</h3>
-    <p style="margin-bottom:20px">Reserve Anyの更なる活用で、オフィス全体の最適化を実現します</p>
-    <div class="grid3" style="gap:16px;text-align:left">
-            <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:16px;backdrop-filter:blur(4px)">
-                <div style="font-size:1.2rem;margin-bottom:4px">①</div>
-                <div style="font-size:.85rem;font-weight:700;margin-bottom:4px">本契約のご決定</div>
-                <div style="font-size:.7rem;color:#d1fae5">〜〇〇年〇月</div>
-            </div>
-            <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:16px;backdrop-filter:blur(4px)">
-                <div style="font-size:1.2rem;margin-bottom:4px">②</div>
-                <div style="font-size:.85rem;font-weight:700;margin-bottom:4px">おまかせ予約全社推進</div>
-                <div style="font-size:.7rem;color:#d1fae5">〇〇年〇月〜</div>
-            </div>
-            <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:16px;backdrop-filter:blur(4px)">
-                <div style="font-size:1.2rem;margin-bottom:4px">③</div>
-                <div style="font-size:.85rem;font-weight:700;margin-bottom:4px">Data Trekking連携検討</div>
-                <div style="font-size:.7rem;color:#d1fae5">〇〇年下半期〜</div>
-            </div></div>
-</div>
-</section>
-
-</main>
-<footer><p>&copy; Reserve Any / ITOKI — Quarterly Business Review</p></footer>
-
+ 
 <script>
-Chart.defaults.font.family="'Outfit','Noto Sans JP',sans-serif";
-Chart.defaults.color='#94a3b8';
-const tt={backgroundColor:'#0f172a',padding:10,cornerRadius:8,displayColors:false,titleFont:{size:11},bodyFont:{size:12}};
-const lg={position:'bottom',labels:{usePointStyle:true,padding:14,boxWidth:8,color:'#64748b',font:{size:10}}};
-const gridY={color:'#f1f5f9',drawBorder:false};
-const noGrid={display:false};
-
-new Chart(document.getElementById('chartUtil'),{type:'line',data:{labels:['9月','10月','11月','12月','1月','2月'],datasets:[{label:'営業時間稼働率',data:[null,null,10.7,29.7,28.9,36.2],borderColor:'#25C695',backgroundColor:'rgba(37,198,149,.1)',fill:true,tension:.4,pointRadius:4,borderWidth:2.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lg,tooltip:tt},scales:{y:{beginAtZero:true,max:60,grid:gridY,border:{display:false},ticks:{callback:v=>v+'%'}},x:{grid:noGrid,border:{display:false}}}}});
-
-new Chart(document.getElementById('chartFail'),{type:'bar',data:{labels:['9月','10月','11月','12月','1月','2月'],datasets:[{label:'おまかせ失敗率',data:[null,null,67.3,39.4,25.1,6.2],backgroundColor:['#cbd5e1','#cbd5e1','#f87171','#fb923c','#fbbf24','#25C695'],borderRadius:6,barPercentage:.6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lg,tooltip:tt},scales:{y:{beginAtZero:true,max:80,grid:gridY,border:{display:false},ticks:{callback:v=>v+'%'}},x:{grid:noGrid,border:{display:false}}}}});
-
-new Chart(document.getElementById('chartRA'),{type:'line',data:{labels:['9月','10月','11月','12月','1月','2月'],datasets:[{label:'RA普及率',data:[30.0,21.1,67.0,75.4,null,67.4],borderColor:'#2563eb',tension:.4,pointRadius:4,borderWidth:2.5},{label:'RA利用率',data:[null,null,44.5,49.3,null,47.3],borderColor:'#94a3b8',borderDash:[4,4],tension:.4,pointRadius:3,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lg,tooltip:tt},scales:{y:{beginAtZero:true,max:100,grid:gridY,border:{display:false},ticks:{callback:v=>v+'%'}},x:{grid:noGrid,border:{display:false}}}}});
-
-new Chart(document.getElementById('chartOmakase'),{type:'line',data:{labels:['9月','10月','11月','12月','1月','2月'],datasets:[{label:'おまかせ普及率',data:[20.0,10.5,36.4,50.8,null,36.9],borderColor:'#25C695',tension:.4,pointRadius:4,borderWidth:2.5},{label:'おまかせ利用率',data:[null,null,11.0,11.4,null,9.6],borderColor:'#d97706',borderDash:[4,4],tension:.4,pointRadius:3,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lg,tooltip:tt},scales:{y:{beginAtZero:true,max:60,grid:gridY,border:{display:false},ticks:{callback:v=>v+'%'}},x:{grid:noGrid,border:{display:false}}}}});
+    const scriptURL = "https://script.google.com/macros/s/AKfycby9qhaxmrnlF3LYA3vuoI0RPYFHwbTasdwL5bvibaNH7WkKHU56j1FxwYKtfUzCI2I4/exec";
+    let costChart, netChart, hourChart;
+ 
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('SW registered:', reg))
+                .catch(err => console.log('SW error:', err));
+        });
+    }
+ 
+    function updateRateLabel() {
+        const b = document.getElementById('beforeSlide').value;
+        const a = document.getElementById('afterSlide').value;
+        document.getElementById('beforeVal').value = b;
+        document.getElementById('afterVal').value = a;
+        document.getElementById('dispBefore').innerText = b + "%";
+        document.getElementById('dispAfter').innerText = a + "%";
+    }
+    function logout() {
+        sessionStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('userName');
+        sessionStorage.removeItem('userId');
+        location.reload();
+    }
+    async function executeLogin() {
+        const idInput = document.getElementById('idInput').value;
+        const btn = document.getElementById('loginBtn');
+        const errorMsg = document.getElementById('loginError');
+        if(!idInput) {
+            errorMsg.innerText = "IDを入力してください";
+            errorMsg.style.display = 'block';
+            return;
+        }
+        btn.innerText = "確認中...";
+        btn.disabled = true;
+        errorMsg.style.display = 'none';
+        try {
+            const response = await fetch(`${scriptURL}?id=${idInput}`);
+            const data = await response.json();
+            if (data.result === 'success') {
+                sessionStorage.setItem('isLoggedIn', 'true');
+                sessionStorage.setItem('userName', data.name);
+                sessionStorage.setItem('userId', idInput);
+                unlockScreen(data.name);
+            } else {
+                errorMsg.innerText = "IDが見つかりません";
+                errorMsg.style.display = 'block';
+                btn.innerText = "ログイン";
+                btn.disabled = false;
+            }
+        } catch (err) {
+            console.error(err);
+            errorMsg.innerText = "通信エラー";
+            errorMsg.style.display = 'block';
+            btn.innerText = "ログイン";
+            btn.disabled = false;
+        }
+    }
+    function unlockScreen(name) {
+        document.getElementById('loginOverlay').style.display = 'none';
+        document.getElementById('headerUserName').innerText = name;
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        if(sessionStorage.getItem('isLoggedIn') === 'true') {
+            unlockScreen(sessionStorage.getItem('userName'));
+        }
+        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('ja-JP');
+        try { initCharts(); } catch(e) { console.error("Chart init error:", e); }
+        calc();
+    });
+    const chartDataLabels = {
+        id: 'chartDataLabels',
+        afterDatasetsDraw(chart) {
+            const { ctx, data } = chart;
+            ctx.save();
+            ctx.font = 'bold 10px sans-serif';
+            ctx.fillStyle = '#333';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            data.datasets[0].data.forEach((value, index) => {
+                const { x, y } = chart.getDatasetMeta(0).data[index];
+                if(x && y) { ctx.fillText(value.toLocaleString(), x, y - 2); }
+            });
+        }
+    };
+    function initCharts() {
+        const commonOpt = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#f0f0f0' } }, x: { grid: { display: false } } } };
+        costChart = new Chart(document.getElementById('costChart').getContext('2d'), { type: 'bar', data: { labels: ['利用料', '創出価値'], datasets: [{ data: [0, 0], backgroundColor: ['#1f3864', '#0070c0'], borderRadius: 4, barThickness: 30 }] }, options: commonOpt, plugins: [chartDataLabels] });
+        netChart = new Chart(document.getElementById('netChart').getContext('2d'), { type: 'bar', data: { labels: ['正味の回収額'], datasets: [{ data: [0], backgroundColor: ['#0070c0'], borderRadius: 4, barThickness: 30 }] }, options: commonOpt, plugins: [chartDataLabels] });
+        hourChart = new Chart(document.getElementById('hourChart').getContext('2d'), { type: 'bar', data: { labels: ['導入前', '目標値'], datasets: [{ data: [0, 0], backgroundColor: ['#d1d5db', '#1f3864'], borderRadius: 4, barThickness: 30 }] }, options: commonOpt, plugins: [chartDataLabels] });
+    }
+    function calc() {
+        const tanka = parseInt(document.getElementById('tanka').value) || 0;
+        const rooms = parseInt(document.getElementById('roomCount').value) || 0;
+        const booths = parseInt(document.getElementById('boothCount').value) || 0;
+        const ids = parseInt(document.getElementById('idCount').value) || 0;
+        const bRate = parseInt(document.getElementById('beforeVal').value) / 100;
+        const aRate = parseInt(document.getElementById('afterVal').value) / 100;
+        const areaT = (rooms * 4) + (booths * 0.5);
+        const officeCost = tanka * areaT;
+        const toolCost = ids * 450;
+        const diffRate = Math.max(0, aRate - bRate);
+        const grossSaving = officeCost * diffRate;
+        const netSaving = grossSaving - toolCost;
+        const roi = toolCost > 0 ? Math.round((grossSaving / toolCost) * 100) : 0;
+        const totalMaxHours = (rooms + booths) * 8 * 20;
+        const hBefore = Math.floor(totalMaxHours * bRate);
+        const hAfter = Math.floor(totalMaxHours * aRate);
+        const hDiff = hAfter - hBefore;
+        document.getElementById('dispTotalOffice').innerText = officeCost.toLocaleString();
+        document.getElementById('dispNetSaving').innerText = netSaving.toLocaleString();
+        document.getElementById('dispGrossSaving').innerText = grossSaving.toLocaleString();
+        document.getElementById('dispHour').innerText = hDiff.toLocaleString();
+        document.getElementById('roiPercent').innerText = roi.toLocaleString();
+ 
+        document.getElementById('cardNetSaving').title = `【計算式】\nスペース資産活用価値(${grossSaving.toLocaleString()}円) - ツール利用料(${ids}名×450円=${toolCost.toLocaleString()}円)`;
+        document.getElementById('cardHour').title = `【計算式】\n総稼働枠((${rooms}室+${booths}台)×8h×20日) × 改善率(${Math.round(diffRate*100)}%)`;
+        document.getElementById('cardGrossSaving').title = `【計算式】\n月間資産維持費(${officeCost.toLocaleString()}円) × 改善率(${Math.round(diffRate*100)}%)`;
+ 
+        if(costChart) { costChart.data.datasets[0].data = [toolCost, grossSaving]; costChart.update(); }
+        if(netChart) { netChart.data.datasets[0].data = [netSaving]; netChart.data.datasets[0].backgroundColor = [netSaving >= 0 ? '#c00000' : '#888']; if(netSaving > 0) netChart.data.datasets[0].backgroundColor = ['#c00000']; netChart.update(); }
+        if(hourChart) { hourChart.data.datasets[0].data = [hBefore, hAfter]; hourChart.update(); }
+        const checks = document.querySelectorAll('.task-check');
+        const solList = document.getElementById('solList');
+        solList.innerHTML = '';
+        const dynamicMessages = [
+            { 
+                title: "面積資産の活用価値を最大化", 
+                text: `現状の稼働率から${Math.round(aRate*100)}%への最適化により、月間約${grossSaving.toLocaleString()}円相当の「新しい価値」をオフィスから創出します。`,
+                tooltip: "" 
+            },
+            { 
+                title: "個室・ブースの回転率向上", 
+                text: `${booths}台のブース利用を効率化。WEB会議の急増によるブース不足を、Reserve Any の予約集約アルゴリズムで解消します。`,
+                tooltip: "" 
+            },
+            { 
+                title: `月間${hDiff}時間の会議枠を創出`, 
+                text: `増床コストなしで、月間${hDiff}時間分の活動スペースを実質的に生み出します。これは会議室${(hDiff/160).toFixed(1)}室分を増設するのと同等の価値です。`,
+                tooltip: `【計算式】\n創出時間(${hDiff}時間) ÷ 1室の月間可能稼働時間(160時間 = 8h×20日)` 
+            },
+            { 
+                title: "客観的データに基づく適正化", 
+                text: `月間${officeCost.toLocaleString()}円の維持費に対し、Reserve Any のデータを活用して無駄のない拠点運営を実現。将来的な賃料ロスを未然に防ぎます。`,
+                tooltip: ""
+            }
+        ];
+        checks.forEach((c, i) => { 
+            if(c.checked) { 
+                c.parentElement.classList.add('checked-row');
+                const d = document.createElement('div');
+                d.className = 'sol-item';
+                if (dynamicMessages[i].tooltip) {
+                    d.title = dynamicMessages[i].tooltip;
+                    d.style.cursor = 'help';
+                }
+                d.innerHTML = `<span class="sol-title">${dynamicMessages[i].title}</span>${dynamicMessages[i].text}`; 
+                solList.appendChild(d); 
+            } else {
+                c.parentElement.classList.remove('checked-row');
+            }
+        });
+    }
+    async function handlePrintAndSave() {
+        const btn = document.querySelector('.print-btn');
+        const originalText = btn.innerText;
+        btn.innerText = "保存中...";
+        btn.disabled = true;
+        const dataToSend = {
+            userId: sessionStorage.getItem('userId') || '不明',
+            userName: sessionStorage.getItem('userName') || '不明',
+            clientName: document.getElementById('clientNameInput').value || "未入力",
+            tanka: document.getElementById('tanka').value + "円",
+            roomCount: document.getElementById('roomCount').value,
+            boothCount: document.getElementById('boothCount').value,
+            employeeCount: document.getElementById('idCount').value,
+            hours: document.getElementById('dispHour').innerText, 
+            roi: document.getElementById('roiPercent').innerText + "%", 
+            netSaving: document.getElementById('dispNetSaving').innerText,
+            /* ▼ 修正箇所: 手入力文字ではなく、数値そのものを連携 */
+            location: document.getElementById('tanka').value, 
+            beforeRate: document.getElementById('beforeVal').value + "%", 
+            afterRate: document.getElementById('afterVal').value + "%"
+        };
+        try {
+            await fetch(scriptURL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dataToSend) });
+        } catch (error) { console.error("保存エラー:", error); }
+        setTimeout(() => { btn.innerText = originalText; btn.disabled = false; window.print(); }, 1000); 
+    }
 </script>
-</body></html>
+</body>
+</html>
